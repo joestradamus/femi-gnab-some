@@ -22,7 +22,7 @@
     "build-css": "node-sass src/styles/index.scss -o src/styles/index.css",
     "watch-css": "npm run build-css && node-sass src/styles/index.scss -o src/styles/index.css --watch",
     "start": "react-scripts start",
-    "start-server": "node src/server",
+    "start-server": "node server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
