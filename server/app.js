@@ -5,7 +5,7 @@ const sentiment = require('sentiment')
 const Twit = require('twit')
 const fs = require('fs')
 
-const credentials = require('../../credentials.json')
+const credentials = require('../credentials.json')
 
 const app = express()
 
