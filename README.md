@@ -14,6 +14,7 @@ and overall sentiment of every tweet in a given geocode.
 
 For the purposes of testing, I've been using San Francisco as a city
 to test this app out, and the results of each tweet look something like this:
+
 <img src="misc/sentiment-analysis.png" width="500"/>
 
 While this is nifty, it's not super heplful right now. Moving forward, I plan to:
@@ -49,6 +50,7 @@ a simple HTTP GET request (I use the package [Twit](https://github.com/ttezel/tw
  ```
 
 Here's what the server looks like in action when it's listening for tweets:
+
 <img src="misc/start-server-demo.gif" width="500"/>
 
 Cool, cool. So you're receiving tweets? It looks like a bunch of sentences with the word tweet followed by a really 
@@ -57,6 +59,7 @@ long number. How is _that_ helpful?
 Right now, I'm just printing the id of each tweet out to the screen, then saving all the details of each tweet in a 
 text file. I'll do some more analysis of it in the next section. The data received from Twitter's API is in a standard 
 JavaScript Object Notation (JSON) format that looks like this:
+
 <img src="misc/tweet-json.png" width="500"/>
 
 
