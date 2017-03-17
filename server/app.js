@@ -6,20 +6,47 @@ const Twit = require('twit')
 const fs = require('fs')
 
 const credentials = require('../credentials.json')
-
 const app = express()
 
-const analyzeTweet = (tweet) => {
-
+const extractDetailsFrom = (tweet) => {
+    const id = tweet.id
+    const date = tweet.created_at
+    const text = tweet.text
+    const textSentiment = sentiment(tweet.text) // get sentiment of text, as well as all positive, negative words
+    const textTopics = nlp(tweet.text).people().data() // get info on sentence's topics (people, places)
+    const user = {
+        id: tweet.user.id,
+        name: tweet.user.name,
+        location: tweet.user.location,
+        followerCount: tweet.user.followers_count,
+        friendsCount: tweet.user.friends_count,
+        favoritesCount: tweet.user.favourites_count,
+        statusesCount: tweet.user.statuses_count,
+        profileImage: tweet.user.profile_image_url
+    }
+    const usersMentioned = tweet.user.user_mentions
+    return {
+        id,
+        date,
+        text,
+        textSentiment,
+        textTopics,
+        user,
+        usersMentioned
+    }
 }
+
 const logTweet = (tweet) => {
-    const logMessage = `Received tweet: ${JSON.stringify(tweet)}\n\n`
-    fs.writeFile(`server/output/tweetResult${tweet.id}.txt`, logMessage, (err) => {
-        if (err) {
-            return console.log(err)
-        }
-        console.log(`Logged a tweet: [${tweet.id}]`)
-    })
+    const details = extractDetailsFrom(tweet)
+    const logMessage = `${JSON.stringify(details)}`
+    if (details.textSentiment.score !== 0) {
+        fs.writeFile(`server/output/san-francisco/TWEET-${tweet.id}.txt`, logMessage, (err) => {
+            if (err) {
+                return console.log(err)
+            }
+            console.log(`Logged a tweet: [${tweet.id}]`)
+        })
+    }
 }
 
 const logTweetsWithParams = () => {
@@ -31,7 +58,7 @@ const logTweetsWithParams = () => {
         '-87.92195320129395', // longitude @ 8th/Michigan St.
         '43.03737183727952'   // latitude @ 8th/Michigan St.
     ]
-    const stream = twitter.stream('statuses/filter', { locations: marquetteCampus })
+    const stream = twitter.stream('statuses/filter', { locations: sanFrancisco })
     stream.on('tweet', (tweet) => {
         logTweet(tweet)
     })
