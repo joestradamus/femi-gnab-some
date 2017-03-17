@@ -30,15 +30,15 @@ Initial Technical Results
 Currently, the server can extract the date, text, user (including followers and name), users mentioned, topics mentioned,
 and overall sentiment of every tweet in a given geocode. 
 
-For the purposes of testing, I've been using San Francisco as a city
-to test this app out, and the results of each tweet look something like this:
+I've been using San Francisco as a city to test this app out (it turns out there are not a lot of people are tweeting on Marquette's campus over spring break), and I assemble the following data for a tweet:
 
 <img src="misc/sentiment-analysis.png" width="500"/>
 
-While this is nifty, it's not super heplful right now. Moving forward, I plan to:
-* Create a database layer to save tweets over time
+While this is nifty, it's not super helpful. I have the basic pieces needed for assembling the kinds of data I need, and most of the configuration of the application seems done. Ideally I would have an accessible website with a chart visualizing aggregate data. To do that, I'll
+* Create a database of analyzed tweets over time
 * Create a visual graphing tool to look at overall sentiment of tweets, filterable by date, user's gender, and 
 potentially the topics extracted from tweets
+* Deploy to a cloud server that everyone can use/look at
 
 How it Works
 ------
