@@ -71,7 +71,7 @@ Here's what the server looks like in action when it's listening for tweets:
 
 <img src="misc/start-server-demo.gif" width="500"/>
 
-Cool, cool. So you're receiving tweets? It looks like a bunch of sentences with the word tweet followed by a really 
+> Cool, cool. So you're receiving tweets? It looks like a bunch of sentences with the word tweet followed by a really 
 long number. How is _that_ helpful?
 
 Right now, I'm just printing the id of each tweet out to the screen, then saving all the details of each tweet in a 
