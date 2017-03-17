@@ -8,11 +8,6 @@ sentiment of tweets that contain text with a gendered subject.
 The goal of the project is to aggregate enough social data on Marquette's campus to determine if there's __a quantifiable
 difference in the treatment of online gender identities__. 
 
-The technical side of this project is an illustration of current communication practices on Twitter; 
-by aggregating tweets at Marquette's campus over the period of a couple weeks (barring any major road bumps) 
-and analyzing sentiment, I hope to find quantifiable differences, if any, in the treatment and expression of different online 
-gender identities.
-
 I think the analysis and critical intervention are a response to the technical findings. Does the social data "fit" a model
 of oppression we've talked about in class? Does the data support or challenge our understanding of the digital person? 
 Of oppression? To guide that discussion, I'd probably use Young's understanding of the five forms of oppression to frame 
@@ -35,15 +30,75 @@ Initial Technical Results
 Currently, the server can extract the date, text, user (including followers and name), users mentioned, topics mentioned,
 and overall sentiment of every tweet in a given geocode. 
 
-For the purposes of testing, I've been using San Francisco as a city
-to test this app out, and the results of each tweet look something like this:
+I've been using San Francisco as a city to test this app out (it turns out there are not a lot of people tweeting on Marquette's campus during spring break), and I can assemble the following data for a tweet (I anonymized the user's name and profile image):
 
-<img src="misc/sentiment-analysis.png" width="500"/>
+```javascript
+{
+  "id": 842762677223116800,
+  "date": "Fri Mar 17 15:40:54 +0000 2017",
+  "text": "Beware of false knowledge; it is more dangerous than ignorance. - George Bernard Shaw https://t.co/4aA6esVwFE",
+  "textSentiment": {
+    "score": -5,
+    "comparative": -0.3333333333333333,
+    "tokens": [
+      "beware",
+      "of",
+      "false",
+      "knowledge",
+      "it",
+      "is",
+      "more",
+      "dangerous",
+      "than",
+      "ignorance",
+      "-",
+      "george",
+      "bernard",
+      "shaw",
+      "httpstco4aa6esvwfe"
+    ],
+    "words": [
+      "ignorance",
+      "dangerous",
+      "false"
+    ],
+    "positive": [],
+    "negative": [
+      "ignorance",
+      "dangerous",
+      "false"
+    ]
+  },
+  "textTopics": [
+    {
+      "text": " - George Bernard Shaw",
+      "normal": "george bernard shaw",
+      "firstName": "george",
+      "middleName": "",
+      "lastName": "bernard",
+      "genderGuess": "Male",
+      "pronoun": "he",
+      "honorifics": []
+    }
+  ],
+  "user": {
+    "id": 3214528745,
+    "name": XXX,
+    "location": null,
+    "followerCount": 61,
+    "friendsCount": 0,
+    "favoritesCount": 0,
+    "statusesCount": 74841,
+    "profileImage": XXX
+  }
+}
+```
 
-While this is nifty, it's not super heplful right now. Moving forward, I plan to:
-* Create a database layer to save tweets over time
+While this is nifty, it's not super helpful. I have the basic pieces needed for assembling the kinds of data I need, and most of the configuration of the application seems done. Ideally I would have an accessible website with a chart visualizing aggregate data. To do that, I'll
+* Create a database of analyzed tweets over time
 * Create a visual graphing tool to look at overall sentiment of tweets, filterable by date, user's gender, and 
 potentially the topics extracted from tweets
+* Deploy to a cloud server that everyone can use/look at
 
 How it Works
 ------
@@ -76,7 +131,7 @@ Here's what the server looks like in action when it's listening for tweets:
 
 <img src="misc/start-server-demo.gif" width="500"/>
 
-Cool, cool. So you're receiving tweets? It looks like a bunch of sentences with the word tweet followed by a really 
+> Cool, cool. So you're receiving tweets? It looks like a bunch of sentences with the word tweet followed by a really 
 long number. How is _that_ helpful?
 
 Right now, I'm just printing the id of each tweet out to the screen, then saving all the details of each tweet in a 
