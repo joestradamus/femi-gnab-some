@@ -8,11 +8,6 @@ sentiment of tweets that contain text with a gendered subject.
 The goal of the project is to aggregate enough social data on Marquette's campus to determine if there's __a quantifiable
 difference in the treatment of online gender identities__. 
 
-The technical side of this project is an illustration of current communication practices on Twitter; 
-by aggregating tweets at Marquette's campus over the period of a couple weeks (barring any major road bumps) 
-and analyzing sentiment, I hope to find quantifiable differences, if any, in the treatment and expression of different online 
-gender identities.
-
 I think the analysis and critical intervention are a response to the technical findings. Does the social data "fit" a model
 of oppression we've talked about in class? Does the data support or challenge our understanding of the digital person? 
 Of oppression? To guide that discussion, I'd probably use Young's understanding of the five forms of oppression to frame 
