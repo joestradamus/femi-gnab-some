@@ -30,9 +30,69 @@ Initial Technical Results
 Currently, the server can extract the date, text, user (including followers and name), users mentioned, topics mentioned,
 and overall sentiment of every tweet in a given geocode. 
 
-I've been using San Francisco as a city to test this app out (it turns out there are not a lot of people are tweeting on Marquette's campus over spring break), and I assemble the following data for a tweet:
+I've been using San Francisco as a city to test this app out (it turns out there are not a lot of people are tweeting on Marquette's campus over spring break), and I can assemble the following data for a tweet (I anonymized the user's name and profile image):
 
-<img src="misc/sentiment-analysis.png" width="500"/>
+```javascript
+{
+  "id": 842762677223116800,
+  "date": "Fri Mar 17 15:40:54 +0000 2017",
+  "text": "Beware of false knowledge; it is more dangerous than ignorance. - George Bernard Shaw https://t.co/4aA6esVwFE",
+  "textSentiment": {
+    "score": -5,
+    "comparative": -0.3333333333333333,
+    "tokens": [
+      "beware",
+      "of",
+      "false",
+      "knowledge",
+      "it",
+      "is",
+      "more",
+      "dangerous",
+      "than",
+      "ignorance",
+      "-",
+      "george",
+      "bernard",
+      "shaw",
+      "httpstco4aa6esvwfe"
+    ],
+    "words": [
+      "ignorance",
+      "dangerous",
+      "false"
+    ],
+    "positive": [],
+    "negative": [
+      "ignorance",
+      "dangerous",
+      "false"
+    ]
+  },
+  "textTopics": [
+    {
+      "text": " - George Bernard Shaw",
+      "normal": "george bernard shaw",
+      "firstName": "george",
+      "middleName": "",
+      "lastName": "bernard",
+      "genderGuess": "Male",
+      "pronoun": "he",
+      "honorifics": []
+    }
+  ],
+  "user": {
+    "id": 3214528745,
+    "name": XXX,
+    "location": null,
+    "followerCount": 61,
+    "friendsCount": 0,
+    "favoritesCount": 0,
+    "statusesCount": 74841,
+    "profileImage": XXX
+  }
+}
+```
 
 While this is nifty, it's not super helpful. I have the basic pieces needed for assembling the kinds of data I need, and most of the configuration of the application seems done. Ideally I would have an accessible website with a chart visualizing aggregate data. To do that, I'll
 * Create a database of analyzed tweets over time
