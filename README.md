@@ -30,7 +30,7 @@ Initial Technical Results
 Currently, the server can extract the date, text, user (including followers and name), users mentioned, topics mentioned,
 and overall sentiment of every tweet in a given geocode. 
 
-I've been using San Francisco as a city to test this app out (it turns out there are not a lot of people are tweeting on Marquette's campus over spring break), and I can assemble the following data for a tweet (I anonymized the user's name and profile image):
+I've been using San Francisco as a city to test this app out (it turns out there are not a lot of people tweeting on Marquette's campus during spring break), and I can assemble the following data for a tweet (I anonymized the user's name and profile image):
 
 ```javascript
 {
