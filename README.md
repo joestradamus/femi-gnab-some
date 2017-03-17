@@ -3,10 +3,33 @@ Overview
 
 __Femi-Gnab-Some__ (working title, also thinking of Patrignarky as an alternative) is a web application designed 
 to pull live Twitter data based on a given geocode (a given latitude, longitude, and radius), and analyze the
-sentiment of tweets that contain text with a gendered subject. The goal is to analyze a distinction, if any, 
-in the treatment of digital persons on the basis of gender. 
+sentiment of tweets that contain text with a gendered subject. 
 
-Initial Results
+The goal of the project is to aggregate enough social data on Marquette's campus to determine if there's __a quantifiable
+difference in the treatment of online gender identities__. 
+
+The technical side of this project is an illustration of current communication practices on Twitter; 
+by aggregating tweets at Marquette's campus over the period of a couple weeks (barring any major road bumps) 
+and analyzing sentiment, I hope to find quantifiable differences, if any, in the treatment and expression of different online 
+gender identities.
+
+I think the analysis and critical intervention are a response to the technical findings. Does the social data "fit" a model
+of oppression we've talked about in class? Does the data support or challenge our understanding of the digital person? 
+Of oppression? To guide that discussion, I'd probably use Young's understanding of the five forms of oppression to frame 
+questions around:
+  1. __Exploitation__ - Do certain users on Twitter exploit others for popularity? For shock value? Can this be measured?
+  2. __Marginalization__ - In theory, is there a digital account of oppression against categories of persons online? Can Twitter
+   data find this? Trends? 
+  3. __Powerlessness__ - Is power in the digital world merely a function of popularity? Is this form of power gendered, and
+  noticeable on Twitter? And do those with more followers tend to tweet about groups/topics in a patterned way?
+  4. __Cultural Imperialism__ - If we look at popular trends/users, is there a normalization of their culture? Can their trends
+  be measured through friend cycles, through followers? For Twitter trends/popular users who gain traction, 
+  can the social impact of their message be measured?
+  5. __Violence__ - This one I'm not sure about. Maybe self-harm can be seen as a form of violence, and a function of digital 
+  oppression? Young thinks violence "may also take the form of name calling or petty harassment" (p. 102), and 
+  Twitter has from time to time acted as a forum for "petty harassment".
+  
+Initial Technical Results
 ------
 
 Currently, the server can extract the date, text, user (including followers and name), users mentioned, topics mentioned,
@@ -99,12 +122,12 @@ const extractDetailsFrom = (tweet) => {
 }
 ```
 
-This describes the overall skeleton of the data I want to collect, but it's hard to visualize without an example. In 
+This describes the overall skeleton of the data I want to collect, but there's also some analysis baked in. In 
 the above code, the line 
 
 ```const textSentiment = sentiment(tweet.text)```
 
-stores information about the words ("tokens") in a sentence, a comparative score (an overall score from -7 to 7),
+stores information about the words (or "tokens") in a sentence, a comparative score (an overall score from -7 to 7),
 and a list of all positive and negative words in a variable called `textSentiment`. In the line below it,
 
 ```const textTopics = nlp(tweet.text).topics().data()```
@@ -137,7 +160,7 @@ const logTweet = (tweet) => {
 I check to make sure the tweet has _some_ emotion, then I write its details to a file suffixed with the id of the tweet 
 so each tweet has its own unique file
 
-Major Packages of Interest
+Libraries Used for Analyzing Text
 ------
 
 [Compromise](https://nlp-expo.firebaseapp.com/) - A syntactically intuitive natural language processing library. 
@@ -151,8 +174,9 @@ The words have been manually labeled by Finn Årup Nielsen in 2009-2011." [Read 
 Tech Stack Used
 ------
 
-Major Frameworks
-* Node and Express for the server routes (and API endpoints eventually)
-* React for the view engine (using the fantastic tool [create-react-app](https://github.com/facebookincubator/create-react-app))
-* SCSS for CSS pre-processing
+Node and Express for the server routes (and eventual API endpoints)
+
+React for the view engine (using the fantastic tool [create-react-app](https://github.com/facebookincubator/create-react-app))
+
+SCSS for CSS pre-processing
 
