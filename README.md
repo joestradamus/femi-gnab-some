@@ -94,7 +94,18 @@ I've been using San Francisco as a city to test this app out (it turns out there
 }
 ```
 
-While this is nifty, it's not super helpful. I have the basic pieces needed for assembling the kinds of data I need, and most of the configuration of the application seems done. Ideally I would have an accessible website with a chart visualizing aggregate data. To do that, I'll
+> This is nifty, but doesn't seem super helpful. What here is gendered? How do you connect this to other tweets and users?  
+
+It would seem that the sentence overall is negative, one topic mentioned in the sentence is a person, George Bernard Shaw, and this person would appear to be male based on their name. There's also the user involved, who may or may not be a male (we can use the same library to predict topics to also predict the gender of the user), and we know how many followers they have, and how many friends they have.
+
+Right now, we can take this tweet and says something along the lines of, there was a male person mentioned in the tweet, and what was said in the tweet appears to be negative overall. Perhaps the user is a male or female, and perhaps we can aggregate these kinds of tweets to see
+* If men (or women) are more likely to be negative/positive overall (based on gender of user and sentiment of tweet)
+* If tweets mention people (both in raw text and in user-mentions), how positive/negative those tweets are
+* Is there a pattern in the _kinds_ of tweets (positive/negative) from people who have more power (measured by their followers/friends)? 
+
+Of course, this approach of aggregating data is problematic. It presupposes a gender binary, and the tooling doesn't work in many cases. In instances of sarcasm, jargon, or acronyms, it doesn't quite get the sentiment right. __But I think a key takeaway here is a reflection on this ongoing process. The more general assumptions I make, the more data I can aggregate; however, I also end up ignoring more important aspects like context, and some other information I might not be able to gauge at all: race, class, and other axes of privelege.__   
+
+I have the basic pieces needed for assembling the kinds of data I need, and most of the configuration of the application seems done. Ideally I would have an accessible website with a chart visualizing aggregate data. To do that, I'll
 * Create a database of analyzed tweets over time
 * Create a visual graphing tool to look at overall sentiment of tweets, filterable by date, user's gender, and 
 potentially the topics extracted from tweets
@@ -144,7 +155,7 @@ JavaScript Object Notation (JSON) format that looks like this:
 ####     Extracting and Analyzing Relevant Data
 
 Each tweet has a unique id, details about the user (including the number of followers they have, their name, their 
-description), details about when and where the tweet occurred, and plenty more information. I'll collect the following
+description), details about when and where the tweet occurred, and plenty more. I'll collect the following
 information, and extract some of my own from analyzing the topics and sentiment of the tweet's text:
   
 ``` javascript
