@@ -27,10 +27,10 @@ const logTweetsWithParams = () => {
     const twitter = new Twit(credentials)
     const sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ]
     const marquetteCampus = [
-        '-87.94504165649414', // longitude @ 25th/State St
-        '43.04336267974874',  // latitude @ 25th/State St
-        '-87.92195320129395', // longitude @ 8th/Michigan St.
-        '43.03737183727952'   // latitude @ 8th/Michigan St.
+        '-87.95', // longitude @ 25th/State St
+        '43.04',  // latitude @ 25th/State St
+        '-87.92', // longitude @ 8th/Michigan St.
+        '43.04'   // latitude @ 8th/Michigan St.
     ]
     const stream = twitter.stream('statuses/filter', { locations: sanFrancisco })
     stream.on('tweet', (tweet) => {
@@ -61,6 +61,7 @@ const extractDetailsFrom = (tweet) => {
         user: {
             id: tweet.user.id,
             name: tweet.user.name,
+            guessedGender: nlp(tweet.user.name).topics().data(),
             location: tweet.user.location,
             followerCount: tweet.user.followers_count,
             friendsCount: tweet.user.friends_count,
