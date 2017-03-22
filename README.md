@@ -181,18 +181,19 @@ const extractDetailsFrom = (tweet) => {
 }
 ```
 
-This describes the overall skeleton of the data I want to collect, but there's also some analysis baked in. In 
-the above code, the line 
+This describes the overall skeleton of the data I want to collect, and it already contains some analysis of the text and the user. In the above code, the line 
 
-```const textSentiment = sentiment(tweet.text)```
+``` javascript
+const textSentiment = sentiment(tweet.text)
+```
 
-stores information about the words (or "tokens") in a sentence, a comparative score (an overall score from -7 to 7),
-and a list of all positive and negative words in a variable called `textSentiment`. In the line below it,
+stores information about the words (or "tokens") in a sentence, a comparative score (an overall score of words rated from -5 to 5), and a list of all positive and negative words into a variable called `textSentiment`. In the line below it,
 
-```const textTopics = nlp(tweet.text).topics().data()```
+``` javascript
+const textTopics = nlp(tweet.text).topics().data()
+```
 
-people and places mentioned in the sentence (as well as the best-guess to the gender of a person's name) are stored in 
-a variable called `textTopics`. 
+people and places mentioned in the sentence (as well as the best-guess to the gender of a person based on their name) are stored in a variable called `textTopics`. 
 
 
 #### Writing Results to a File
