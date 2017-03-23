@@ -5,8 +5,11 @@ const sentiment = require('sentiment')
 const Twit = require('twit')
 const fs = require('fs')
 const jsonFormat = require('json-format')
+const MongoClient = require('mongodb').MongoClient
+
 
 const credentials = require('../credentials.json')
+const dbConfig = "mongodb://admin:1234567809@ds137090.mlab.com:37090/femi-gnab-some"
 const app = express()
 
 app.use( (req, res) => {
@@ -23,16 +26,16 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'static', 'public/index.html'))
 })
 
-const logTweetsWithParams = () => {
+const listenForTweets = () => {
     const twitter = new Twit(credentials)
-    const sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ]
+    const sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ] // Top Right, Bottom Left coordinates
     const marquetteCampus = [
-        '-87.95', // longitude @ 25th/State St
-        '43.04',  // latitude @ 25th/State St
-        '-87.92', // longitude @ 8th/Michigan St.
-        '43.04'   // latitude @ 8th/Michigan St.
+        '-87.942874',  // longitude @ 23rd/State St.
+        '43.037529',   // latitude @ 23rd/State St.
+        '-87.9210',    // longitude @ 8th/Michigan St.
+        '43.0427577'   // latitude @ 8th/Michigan St.
     ]
-    const stream = twitter.stream('statuses/filter', { locations: sanFrancisco })
+    const stream = twitter.stream('statuses/filter', { locations: marquetteCampus })
     stream.on('tweet', (tweet) => {
         logTweet(tweet)
     })
@@ -40,13 +43,22 @@ const logTweetsWithParams = () => {
 
 const logTweet = (tweet) => {
     const details = extractDetailsFrom(tweet)
-    const logMessage = jsonFormat(details, { type: 'space', size: 2} )
-    if (details.textSentiment.score !== 0) {
-        fs.writeFile(`server/output/san-francisco/TWEET-${tweet.id}.txt`, logMessage, (err) => {
-            if (err) {
-                return console.log(err)
+    if (containsRelevantDetails(details)) {
+        console.log()
+        MongoClient.connect(dbConfig, (err, db) => {
+            if (!err) {
+                console.log(`Successfully connected to Mongo instance!`)
+                db.collection('tweets').insertOne(details, (err, result) => {
+                    if (!err) {
+                        console.log(`Successfully saved tweet ${details.id} to database`)
+                    } else {
+                        console.log(`Could not save tweet to database!: ${err}`)
+                    }
+                })
+                db.close()
+            } else {
+                console.log(`ERROR connecting to database: ${err}`)
             }
-            console.log(`Logged a tweet: [${tweet.id}]`)
         })
     }
 }
@@ -72,6 +84,17 @@ const extractDetailsFrom = (tweet) => {
         usersMentioned: tweet.user.user_mentions
     }
 }
-logTweetsWithParams()
+
+const containsRelevantDetails = (tweet) => {
+    return (
+        tweet.textSentiment
+        && tweet.textSentiment.score !== 0
+        && tweet.user
+        && tweet.user.guessedGender.length !== 0
+        && (tweet.user.guessedGender[0].genderGuess === "Female" || tweet.user.guessedGender[0].genderGuess === "Male")
+    )
+}
+
+listenForTweets()
 
 module.exports = app

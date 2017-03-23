@@ -13,6 +13,7 @@
     "fs": "0.0.1-security",
     "http": "0.0.0",
     "json-format": "^1.0.0",
+    "mongodb": "^2.2.25",
     "path": "^0.12.7",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
@@ -22,7 +23,7 @@
   "scripts": {
     "build-css": "node-sass src/styles/index.scss -o src/styles/index.css",
     "watch-css": "npm run build-css && node-sass src/styles/index.scss -o src/styles/index.css --watch",
-    "start": "react-scripts start",
+    "start": "node server",
     "start-server": "node server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
