@@ -9,7 +9,7 @@ const MongoClient = require('mongodb').MongoClient
 
 
 const credentials = require('../credentials.json')
-const dbConfig = "mongodb://admin:1234567809@ds137090.mlab.com:37090/femi-gnab-some"
+const dbConfig = require('../credentials.json').mongo_url
 const app = express()
 
 app.use( (req, res) => {
