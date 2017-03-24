@@ -1,4 +1,3 @@
-![Heroku](https://heroku-badge.herokuapp.com/?app=femi-gnab-some)
 ![Heroku](http://heroku-badge.herokuapp.com/?app=femi-gnab-someo&style=flat)
 
 Overview
