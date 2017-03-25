@@ -21,6 +21,7 @@
     "react-dom": "^15.4.2",
     "react-highcharts": "^11.5.0",
     "react-icons": "^2.2.3",
+    "react-scripts": "0.9.3",
     "sentiment": "^3.0.1",
     "twit": "^2.2.5",
     "winston": "^2.3.1"
