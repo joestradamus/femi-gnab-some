@@ -1,0 +1,16 @@
+.home-button {
+  background-color: #462066;
+  margin-bottom: 4vh; }
+  .home-button :hover {
+    background-color: #ffb85f;
+    color: #462066; }
+  .home-button a {
+    size: 5em;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: none;
+    color: #8ed2c9; }
+  .home-button .home-button-icon {
+    padding-top: 5px; }
+  .home-button .home-button-text {
+    padding: 5px 5px 5px 5px; }

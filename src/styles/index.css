@@ -1,12 +1,29 @@
 @import url("https://fonts.googleapis.com/css?family=Monofett|Righteous|Open+Sans+Condensed:300i");
-.App {
+.home-button {
+  background-color: #462066;
+  margin-bottom: 4vh; }
+  .home-button :hover {
+    background-color: #ffb85f;
+    color: #462066; }
+  .home-button a {
+    size: 5em;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: none;
+    color: #8ed2c9; }
+  .home-button .home-button-icon {
+    padding-top: 5px; }
+  .home-button .home-button-text {
+    padding: 5px 5px 5px 5px; }
+
+.home {
   position: relative;
   background-color: black; }
-  .App .App-Background {
+  .home .home-background {
     background-color: #462066;
     max-width: 100vw;
     min-height: 100vh; }
-    .App .App-Background .App-Banner {
+    .home .home-background .home-banner {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -15,23 +32,22 @@
       text-shadow: 0 0 5px black;
       width: 75%;
       padding: 10% 12.5% 10% 12.5%; }
-      .App .App-Background .App-Banner h1 {
+      .home .home-background .home-banner h1 {
         font-family: "Righteous", cursive;
-        font-size: 4em;
+        font-size: 5.2em;
         color: #ffb85f;
         padding: 0; }
         @media screen and (max-width: 800px) {
-          .App .App-Background .App-Banner h1 {
-            font-size: 1.75em; } }
-      .App .App-Background .App-Banner h2 {
+          .home .home-background .home-banner h1 {
+            font-size: 2.8em; } }
+      .home .home-background .home-banner h2 {
         font-family: "Open Sans Condensed", sans-serif;
-        font-size: 1.5em;
+        font-size: 2.45em;
         font-style: italic;
         color: #00aaa0; }
-      .App .App-Background .App-Banner .App-Buttons a svg {
-        color: #8ed2c9; }
-        .App .App-Background .App-Banner .App-Buttons a svg :hover {
-          color: #ff7a5a; }
+        @media screen and (max-width: 800px) {
+          .home .home-background .home-banner h2 {
+            font-size: 1.2em; } }
 
 body {
   margin: 0;

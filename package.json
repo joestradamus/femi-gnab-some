@@ -13,6 +13,8 @@
     "fs": "0.0.1-security",
     "http": "0.0.0",
     "json-format": "^1.0.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "mongodb": "^2.2.25",
     "path": "^0.12.7",
     "react": "^15.4.2",
@@ -20,13 +22,15 @@
     "react-highcharts": "^11.5.0",
     "react-icons": "^2.2.3",
     "sentiment": "^3.0.1",
-    "twit": "^2.2.5"
+    "twit": "^2.2.5",
+    "winston": "^2.3.1"
   },
   "scripts": {
-    "build-css": "node-sass src/styles/index.scss -o src/styles/index.css",
+    "build-css": "node-sass src/styles/index.scss -o src/styles/",
+    "bundle": "concurrently \"react-scripts start\" \"npm run watch-css\"",
     "watch-css": "node-sass src/styles/index.scss -o src/styles/ --watch",
-    "start": "concurrently \"node server\" \"react-scripts start\"",
-    "start-development": "concurrently \"npm run start\" \"npm run watch-css\"",
+    "start": "npm run build && node server",
+    "start-development": "concurrently \"npm run bundle\" \"npm run start-server\"",
     "start-server": "node server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

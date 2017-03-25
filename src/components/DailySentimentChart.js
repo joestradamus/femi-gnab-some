@@ -18,7 +18,7 @@ export const DailySentimentChart = () => {
             plotBorderColor: '#606063'
         },
         title: {
-            text: 'US and USSR nuclear stockpiles',
+            text: '',
             style: {
                 color: '#E0E0E3',
                 textTransform: 'uppercase',
@@ -26,8 +26,7 @@ export const DailySentimentChart = () => {
             }
         },
         subtitle: {
-            text: 'Source: <a href="http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf">' +
-            'thebulletin.metapress.com</a>',
+            text: '',
             style: {
                 color: '#E0E0E3',
                 textTransform: 'uppercase'
@@ -81,7 +80,7 @@ export const DailySentimentChart = () => {
             style: {
                 color: '#F0F0F0'
             },
-            pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+            pointFormat: 'In {point.x}, {series.name} said <b>{point.y:,.0f}</b><br/> mean things in tweets'
         },
         plotOptions: {
             area: {
@@ -116,7 +115,7 @@ export const DailySentimentChart = () => {
             }
         },
         series: [{
-            name: 'USA',
+            name: 'men',
             data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
                 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
                 27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
@@ -125,7 +124,7 @@ export const DailySentimentChart = () => {
                 22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
                 10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
         }, {
-            name: 'USSR/Russia',
+            name: 'women',
             data: [null, null, null, null, null, null, null, null, null, null,
                 5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322,
                 4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478,

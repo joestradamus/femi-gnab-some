@@ -5,22 +5,19 @@ const sentiment = require('sentiment')
 const Twit = require('twit')
 const fs = require('fs')
 
-const credentials = require('credentials.json')
+const credentials = require('./credentials.json')
 
 const app = express()
 
-app.use( (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE')
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-    res.setHeader('Access-Control-Allow-Credentials', true)
-})
+app.use(express.static(path.resolve(__dirname, '..', '../build')))
 
-// Serve static assets
-app.use(express.static(path.resolve(__dirname, '..', 'static')))
+
+// Serve static assets TODO: figure out directory
+app.use(express.static(path.resolve(__dirname, '..', '../femi-gnab-some/build')))
 
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'static', '../public/index.html'))
+    console.log('get request on root')
+    res.sendFile(path.resolve(__dirname, '..', '../femi-gnab-some/build', 'index.html')) // TODO: return right directory
 })
 
 const listenForTweets = () => {
