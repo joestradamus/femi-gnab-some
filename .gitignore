@@ -9,8 +9,6 @@ server/credentials.json
 # testing
 /coverage
 
-# production
-/build
 
 # misc
 .idea

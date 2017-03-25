@@ -30,7 +30,7 @@
     "build-css": "node-sass src/styles/index.scss -o src/styles/",
     "bundle": "concurrently \"react-scripts start\" \"npm run watch-css\"",
     "watch-css": "node-sass src/styles/index.scss -o src/styles/ --watch",
-    "start": "npm run build && node server",
+    "start": "node server",
     "start-development": "concurrently \"npm run bundle\" \"npm run start-server\"",
     "start-server": "node server",
     "build": "react-scripts build",
