@@ -1,42 +1,56 @@
 const express = require('express')
 const path = require('path')
-const nlp = require('compromise')
-const sentiment = require('sentiment')
-const Twit = require('twit')
-const fs = require('fs')
 
+const tweetAnalysisService = require('./services/TweetAnalysisService')
+const databaseService = require('./services/DatabaseService')
 
-let credentials
+const initializeApp = () => {
+    const credentials = // require('./credentials.json') // Use this for development mode
+        {
+            consumer_key: process.env.CONSUMER_KEY,                  // With a runtime environment variable "CONSUMER_KEY"
+            consumer_secret: process.env.CONSUMER_SECRET,            // With a runtime environment variable "CONSUMER_SECRET"
+            access_token: process.env.ACCESS_TOKEN,                  // With a runtime environment variable "ACCESS_TOKEN"
+            access_token_secret: process.env.ACCESS_TOKEN_SECRET,    // With a runtime environment variable "ACCESS_TOKEN_SECRET"
+            mongo_url: process.env.MONGO_URL                         // With a runtime environment variable "MONGO_URL"
+        }
+    const stream = tweetAnalysisService.createStreamForTweetsWith(credentials)
+    stream.on('tweet', (tweet) => {                                                // on tweet
+        const filteredTweet = tweetAnalysisService.extractDetailsFromRaw(tweet)    // get the data that's relevant
+        if (tweetAnalysisService.containsRelevantDetails(filteredTweet)) {         // the tweet has some emotional sentiment, gender involved
+            databaseService.addTweetToDb(tweet)
+        }
+    })
+}
 
-process.env.NODE_ENV === 'development'
-    ? credentials = require('./credentials.json')
-    : {
-        consumer_key: process.env.CONSUMER_KEY,
-        consumer_secret: process.env.CONSUMER_SECRET,
-        access_token: process.env.ACCESS_TOKEN,
-        access_token_secret: process.env.ACCESS_TOKEN_SECRET,
-        mongo_url: process.env.MONGO_URL
-    }
 
 const app = express()
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'))
 })
 
-const listenForTweets = () => {
-    const twitter = new Twit(credentials)
-    const sanFrancisco = [ '-122.75', '36.8', '-121.75', '37.8' ] // Top Right, Bottom Left coordinates
-    const marquetteCampus = [
-        '-87.942874',  // longitude @ 23rd/State St.
-        '43.037529',   // latitude @ 23rd/State St.
-        '-87.9210',    // longitude @ 8th/Michigan St.
-        '43.0427577'   // latitude @ 8th/Michigan St.
-    ]
-    const stream = twitter.stream('statuses/filter', { locations: marquetteCampus })
+app.get('/api/tweets', (req, res) => {
+    console.log('GET request on /api/tweets')
+    databaseService.getAllTweets(res)
+})
 
-}
+app.get('/api/female', (req, res) => {
+    console.log(`GET request on /api/female`)
+    databaseService.getAllTweetsByGender('Female', res)
+})
+
+app.get('/api/male', (req, res) => {
+    console.log(`GET request on /api/male`)
+    databaseService.getAllTweetsByGender('Male', res)
+})
+
+app.get('/api/score/:score', (req, res) => {
+    console.log(`Get request on /api/score`)
+    databaseService.getAllTweetsByScore(req.params.score, res)
+})
+
+initializeApp()
 
 module.exports = app

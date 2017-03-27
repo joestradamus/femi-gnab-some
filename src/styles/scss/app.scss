@@ -9,6 +9,7 @@
     background-color: $darkPurple;
     max-width: 100vw;
     min-height: 100vh;
+    padding-top: 5vh;
     .home-banner {
       position: absolute;
       top: 50%;
@@ -25,19 +26,18 @@
         font-family: $titleFont;
         font-size: $titleSize * 1.3;
         color: $darkOrange;
-        padding: 0;
       }
       h2 {
+        padding: 0;
         @media screen and (max-width: 800px) {
           font-size: $textSize * .8;
         }
-        font-family: $bodyFont;
+        font-family: $headerFont;
         font-size: $headerSize * .7;
-        font-style: italic;
         color: $darkTeal;
       }
       .home-buttons {
-
+        padding-bottom: 10vh;
       }
     }
 

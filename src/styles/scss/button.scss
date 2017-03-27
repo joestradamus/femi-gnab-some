@@ -2,10 +2,6 @@
 
 @mixin create-button-styles-with($background-color, $background-hover, $font-color, $font-hover) {
   background-color: $background-color;
-  :hover {
-    background-color: $background-hover;
-    color: $font-hover;
-  }
   a {
     size: 5em;
     text-decoration: none;
@@ -13,13 +9,17 @@
     text-shadow: none;
     color: $font-color;
   }
+  :hover {
+    background-color: $background-hover;
+    color: $font-hover;
+  }
 }
 
 .home-button {
   @include create-button-styles-with($darkPurple, $darkOrange, $lightTeal, $darkPurple);
   margin-bottom: 4vh;
   .home-button-icon {
-    padding-top: 5px;
+    padding-top: 3vh;
   }
 
   .home-button-text{

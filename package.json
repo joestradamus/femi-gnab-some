@@ -1,6 +1,6 @@
 {
   "name": "femi-gnab-some",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "node-sass": "^4.5.0",
@@ -10,8 +10,6 @@
     "compromise": "^7.0.28",
     "concurrently": "^3.4.0",
     "express": "^4.15.2",
-    "fs": "0.0.1-security",
-    "http": "0.0.0",
     "json-format": "^1.0.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
@@ -23,15 +21,14 @@
     "react-icons": "^2.2.3",
     "react-scripts": "0.9.3",
     "sentiment": "^3.0.1",
-    "twit": "^2.2.5",
-    "winston": "^2.3.1"
+    "twit": "^2.2.5"
   },
   "scripts": {
     "build-css": "node-sass src/styles/index.scss -o src/styles/",
     "bundle": "concurrently \"react-scripts start\" \"npm run watch-css\"",
     "watch-css": "node-sass src/styles/index.scss -o src/styles/ --watch",
-    "start": "node server",
-    "start-development": "concurrently \"npm run bundle\" \"npm run start-server\"",
+    "start": "npm run start-server",
+    "start-development": "set NODE_ENV=development && concurrently \"npm run bundle\" \"npm run start-server\"",
     "start-server": "node server",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

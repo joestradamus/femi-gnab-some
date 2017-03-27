@@ -84,7 +84,7 @@ export const DailySentimentChart = () => {
         },
         plotOptions: {
             area: {
-                pointStart: 1940,
+                pointStart: 1940,                                                                           // TODO: X0 of plot
                 marker: {
                     enabled: false,
                     symbol: 'circle',
@@ -98,7 +98,7 @@ export const DailySentimentChart = () => {
             },
             series: {
                 dataLabels: {
-                    color: '#B0B0B3'
+                    color: '#FF7A5A'
                 },
                 marker: {
                     lineColor: '#333'
@@ -133,7 +133,7 @@ export const DailySentimentChart = () => {
                 35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,
                 21000, 20000, 19000, 18000, 18000, 17000, 16000]
         }],
-        colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
+        colors: ['#FF7A5A', '#FFB85F', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
             '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
         legend: {
             itemStyle: {
