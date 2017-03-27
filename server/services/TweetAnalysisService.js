@@ -4,7 +4,7 @@ const sentiment = require('sentiment')
 
 const createStreamForTweetsWith = (credentials, coords = marquetteCampus) => {
     const twitter = new Twit(credentials)                                // Authenticate application
-    return twitter.stream('statuses/filter', {locations: coords})        // listen for tweets bounded by coords (default MU)
+    return twitter.stream('statuses/filter', { locations: coords })        // listen for tweets bounded by coords (default MU)
 }
 
 const marquetteCampus = [ // Top right, bottom left coordinates
@@ -24,7 +24,7 @@ const extractDetailsFromRaw = (tweet) => {
         user: {
             id: tweet.user.id,
             name: tweet.user.name,
-            guessedGender: nlp(tweet.user.name).topics().data(),
+            guessedGender: nlp(tweet.user.name).topics().data().length === 0 ? null : nlp(tweet.user.name).topics().data()[0].genderGuess,
             location: tweet.user.location,
             followerCount: tweet.user.followers_count,
             friendsCount: tweet.user.friends_count,
@@ -41,8 +41,8 @@ const containsRelevantDetails = (tweet) => {
         tweet.textSentiment
         && tweet.textSentiment.score !== 0          // has some sentiment
         && tweet.user                               // has a clear user
-        && tweet.user.guessedGender.length !== 0    // user's gender is "guessable"
-        && (tweet.user.guessedGender[0].genderGuess === "Female" || tweet.user.guessedGender[0].genderGuess === "Male")
+        && tweet.user.guessedGender                 // user's gender is "guessable"
+        && (tweet.user.guessedGender === "Female" || tweet.user.guessedGender === "Male")
     )
 }
 
