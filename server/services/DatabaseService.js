@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient
 
-const dbConfig =  /* require('../credentials.json').mongo_url // */  process.env.MONGO_URL
+const dbConfig =  require('../credentials.json').mongo_url //  process.env.MONGO_URL
 const TWEET_TABLE_NAME = 'FILTERED_TWEETS'
 
 const addTweetToDb = (tweet) => {
@@ -20,7 +20,7 @@ const getAllTweetsByGender = (gender, res) => {
                         $match: { "user.guessedGender": gender }
                     }
                 ]).toArray( (err, result) => {
-                    res.send( result )
+                    res.send( JSON.stringify(result) )
                 })
             } else {
                 throw `Could not read tweets from database: ${err}`
@@ -37,7 +37,7 @@ const getAllTweetsByScore = (score, res) => {
             if (!err) {
                 db.collection(TWEET_TABLE_NAME).aggregate([{ $match: { "textSentiment.score": score }}])
                     .toArray( (err, result) => {
-                        res.send( result )
+                        res.send( JSON.stringify(result) )
                     })
             } else {
                 throw `Could not read tweets from database: ${err}`
@@ -54,7 +54,7 @@ const getAllTweets = (res) => {
             if (!err) {
                 db.collection(TWEET_TABLE_NAME).aggregate()
                     .toArray( (err, result) => {
-                        res.send( result )
+                        res.send( JSON.stringify(result) )
                     })
             } else {
                 throw `Could not read tweets from database: ${err}`
