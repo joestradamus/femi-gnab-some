@@ -1,35 +1,16 @@
 import * as React from 'react'
 import ReactHighcharts from 'react-highcharts'
-import moment from 'moment'
-import * as _ from 'lodash'
 
-import * as tweets from './tweets.json'
-import * as men from './men.json'
-import * as women from './women.json'
+import { createAverageDailySeriesFor } from './utilities'
+import * as men from '../../../men.json'
+import * as women from '../../../women.json'
+import * as tweets from '../../../tweets.json'
 
 export const DailySentimentChart = () => {
 
-    const createSeriesFor = (collection) => {
-        const hours = new Map()
-        _.range(24).forEach(number => hours.set(number, { totalSentiment: 0, totalTweets: 0 })) // Initialize map
-        _.toArray(collection).forEach((tweet) => {
-            if (tweet.textSentiment) {
-                const hour = moment(tweet.date).hour()
-                const dataPoint = {
-                    totalSentiment: hours.get(hour).totalSentiment + tweet.textSentiment.score,
-                    totalTweets: hours.get(hour).totalTweets + 1
-                }
-                hours.set(hour, dataPoint)
-            }
-        })
-        console.log(hours)
-        return _.range(24).map((hour) => (
-            hours.get(hour).totalSentiment / hours.get(hour).totalTweets
-        ))
-    }
-
     const chartConfig = {
         chart: {
+            height: 290,
             type: 'area',
             backgroundColor: {
                 linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
@@ -44,15 +25,14 @@ export const DailySentimentChart = () => {
             plotBorderColor: '#606063'
         },
         title: {
-            text: '',
+            text: 'Average Sentiment in a Day',
             style: {
                 color: '#E0E0E3',
-                textTransform: 'uppercase',
                 fontSize: '20px'
             }
         },
         subtitle: {
-            text: '',
+            text: 'total sentiment of tweets divided by total number of tweets',
             style: {
                 color: '#E0E0E3',
                 textTransform: 'uppercase'
@@ -62,7 +42,7 @@ export const DailySentimentChart = () => {
             allowDecimals: false,
             labels: {
                 formatter: function () {
-                    return this.value; // clean, unformatted number for year
+                    return this.value;
                 },
                 style: {
                     color: '#E0E0E3'
@@ -103,11 +83,11 @@ export const DailySentimentChart = () => {
             style: {
                 color: '#F0F0F0'
             },
-            pointFormat: 'At hour {point.x} of the day, {series.name} averaged a sentiment of <b>{point.y:,.2f}</b><br/> in their tweets'
+            pointFormat: 'At hour {point.x} of the day, {series.name} had a sentiment of <b>{point.y:,.2f}</b><br/> in their tweets'
         },
         plotOptions: {
             area: {
-                pointStart: 0,                                                                           // TODO: X0 of plot
+                pointStart: 0,
                 marker: {
                     enabled: false,
                     symbol: 'circle',
@@ -138,13 +118,16 @@ export const DailySentimentChart = () => {
             }
         },
         series: [{
-            name: 'men',
-            data: createSeriesFor(men)
+            name: 'Men',
+            data: createAverageDailySeriesFor(men)
         }, {
-            name: 'women',
-            data: createSeriesFor(women),
+            name: 'Women',
+            data: createAverageDailySeriesFor(women),
+        }, {
+            name: 'Average',
+            data: createAverageDailySeriesFor(tweets)
         }],
-        colors: ['#FF7A5A', '#FFB85F'],
+        colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', '#FCF4D9'],
         legend: {
             itemStyle: {
                 color: '#E0E0E3'
@@ -256,7 +239,7 @@ export const DailySentimentChart = () => {
     }
 
     return (
-        <div className="Chart">
+        <div className="daily-sentiment-chart">
             <ReactHighcharts config={ chartConfig } />
         </div>
     )

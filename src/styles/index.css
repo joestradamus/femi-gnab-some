@@ -1,21 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Poiret+One|Righteous|Open+Sans+Condensed:300");
-.home-button {
-  background-color: #462066;
-  margin-bottom: 4vh; }
-  .home-button a {
-    size: 5em;
-    text-decoration: none;
-    text-align: center;
-    text-shadow: none;
-    color: #8ed2c9; }
-  .home-button :hover {
-    background-color: #ffb85f;
-    color: #462066; }
-  .home-button .home-button-icon {
-    padding-top: 3vh; }
-  .home-button .home-button-text {
-    padding: 5px 5px 5px 5px; }
-
 .home {
   position: relative;
   background-color: black; }
@@ -50,6 +33,43 @@
             font-size: 1.2em; } }
       .home .home-background .home-banner .home-buttons {
         padding-bottom: 10vh; }
+
+.home-button {
+  background-color: #462066;
+  margin-bottom: 4vh; }
+  .home-button a {
+    size: 5em;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: none;
+    color: #8ed2c9; }
+  .home-button :hover {
+    background-color: #ffb85f;
+    color: #462066; }
+  .home-button .home-button-icon {
+    padding-top: 3vh; }
+  .home-button .home-button-text {
+    padding: 5px 5px 5px 5px; }
+
+.chart-area {
+  height: 100vh;
+  background-color: lightslategrey;
+  padding: 5vh 1vw 5vh 1vw; }
+  .chart-area .main-chart {
+    position: absolute; }
+    .chart-area .main-chart .daily-breakdown-chart {
+      border: solid #ffb85f 3px;
+      width: 50vw; }
+  .chart-area .side-charts {
+    position: relative;
+    float: right; }
+    .chart-area .side-charts .daily-scatter-chart {
+      width: 45vw;
+      border: solid #ffb85f 3px; }
+    .chart-area .side-charts .daily-sentiment-chart {
+      width: 45vw;
+      margin-bottom: 2vh;
+      border: solid #ffb85f 3px; }
 
 body {
   margin: 0;

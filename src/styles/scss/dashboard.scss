@@ -1,0 +1,30 @@
+@import "colors";
+
+.chart-area {
+  height: 100vh;
+  background-color: lightslategrey;
+  padding: 5vh 1vw 5vh 1vw;
+  .main-chart {
+    position: absolute;
+    .daily-breakdown-chart {
+      border: solid $darkOrange 3px;
+      width: 50vw;
+    }
+  }
+  .side-charts {
+    position: relative;
+    float: right;
+    .daily-scatter-chart {
+      width: 45vw;
+      border: solid $darkOrange 3px;
+    }
+
+    .daily-sentiment-chart {
+      width: 45vw;
+      margin-bottom: 2vh;
+      border: solid $darkOrange 3px;
+    }
+  }
+
+}
+
