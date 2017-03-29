@@ -1,14 +1,27 @@
 @import "colors";
+@import "fonts";
+
+$chartBackgroundColor: #2a2a2b;
 
 .chart-area {
-  height: 100vh;
-  background-color: lightslategrey;
-  padding: 5vh 1vw 5vh 1vw;
+  min-height: 100vh;
+  background-color: $chartBackgroundColor;
+  padding: 5vh 1.5vw 5vh 1.5vw;
+  .chart-area-title {
+    color: $darkOrange;
+    font-family: $headerFont;
+    font-size: $headerSize;
+    text-align: center;
+    padding: 2.5vh 0 2.5vh 0;
+  }
   .main-chart {
     position: absolute;
     .daily-breakdown-chart {
-      border: solid $darkOrange 3px;
       width: 50vw;
+      box-shadow: 0 0 5px 1px $lightCream;
+      :hover {
+        box-shadow: 0 0 5px 1px $darkOrange;
+      }
     }
   }
   .side-charts {
@@ -16,13 +29,18 @@
     float: right;
     .daily-scatter-chart {
       width: 45vw;
-      border: solid $darkOrange 3px;
+      box-shadow: 0 0 5px 1px $lightCream;
+      :hover {
+        box-shadow: 0 0 5px 1px $darkOrange;
+      }
     }
-
     .daily-sentiment-chart {
       width: 45vw;
       margin-bottom: 2vh;
-      border: solid $darkOrange 3px;
+      box-shadow: 0 0 5px 1px $lightCream;
+      :hover {
+        box-shadow: 0 0 5px 1px $darkOrange;
+      }
     }
   }
 

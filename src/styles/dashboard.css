@@ -1,19 +1,32 @@
+@import url("https://fonts.googleapis.com/css?family=Poiret+One|Righteous|Open+Sans+Condensed:300");
 .chart-area {
-  height: 100vh;
-  background-color: lightslategrey;
-  padding: 5vh 1vw 5vh 1vw; }
+  min-height: 100vh;
+  background-color: #2a2a2b;
+  padding: 5vh 1.5vw 5vh 1.5vw; }
+  .chart-area .chart-area-title {
+    color: #ffb85f;
+    font-family: "Poiret One", cursive;
+    font-size: 3.5em;
+    text-align: center;
+    padding: 2.5vh 0 2.5vh 0; }
   .chart-area .main-chart {
     position: absolute; }
     .chart-area .main-chart .daily-breakdown-chart {
-      border: solid #ffb85f 3px;
-      width: 50vw; }
+      width: 50vw;
+      box-shadow: 0 0 5px 1px #fcf4d9; }
+      .chart-area .main-chart .daily-breakdown-chart :hover {
+        box-shadow: 0 0 5px 1px #ffb85f; }
   .chart-area .side-charts {
     position: relative;
     float: right; }
     .chart-area .side-charts .daily-scatter-chart {
       width: 45vw;
-      border: solid #ffb85f 3px; }
+      box-shadow: 0 0 5px 1px #fcf4d9; }
+      .chart-area .side-charts .daily-scatter-chart :hover {
+        box-shadow: 0 0 5px 1px #ffb85f; }
     .chart-area .side-charts .daily-sentiment-chart {
       width: 45vw;
       margin-bottom: 2vh;
-      border: solid #ffb85f 3px; }
+      box-shadow: 0 0 5px 1px #fcf4d9; }
+      .chart-area .side-charts .daily-sentiment-chart :hover {
+        box-shadow: 0 0 5px 1px #ffb85f; }

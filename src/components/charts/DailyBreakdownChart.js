@@ -12,13 +12,7 @@ export const DailyBreakdownChart = () => {
         chart: {
             type: 'bar',
             height: 600,
-            backgroundColor: {
-                linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-                stops: [
-                    [0, '#2a2a2b'],
-                    [1, '#3e3e40']
-                ]
-            },
+            backgroundColor: '#2a2a2b',
             style: {
                 fontFamily: '\'Unica One\', sans-serif'
             },
