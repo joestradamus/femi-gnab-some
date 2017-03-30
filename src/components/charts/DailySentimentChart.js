@@ -1,7 +1,7 @@
 import * as React from 'react'
 import ReactHighcharts from 'react-highcharts'
 
-import { createAverageDailySeriesFor } from './utilities'
+import { createAverageHourlySeriesFor } from './utilities'
 import * as men from '../../../men.json'
 import * as women from '../../../women.json'
 import * as tweets from '../../../tweets.json'
@@ -113,13 +113,13 @@ export const DailySentimentChart = () => {
         },
         series: [{
             name: 'Men',
-            data: createAverageDailySeriesFor(men)
+            data: createAverageHourlySeriesFor(men)
         }, {
             name: 'Women',
-            data: createAverageDailySeriesFor(women),
+            data: createAverageHourlySeriesFor(women),
         }, {
             name: 'Average',
-            data: createAverageDailySeriesFor(tweets)
+            data: createAverageHourlySeriesFor(tweets)
         }],
         colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', '#FCF4D9'],
         legend: {

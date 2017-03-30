@@ -1,7 +1,6 @@
 import moment from 'moment'
 import * as _ from 'lodash'
 
-
 /**
  *
  * Create an array of average sentiments (each index in output array corresponds to the hour of day)
@@ -9,7 +8,7 @@ import * as _ from 'lodash'
  * @param tweets - an array of tweets
  * @returns array of average sentiment
  */
-export const createAverageDailySeriesFor = (tweets) => {
+export const createAverageHourlySeriesFor = (tweets) => {
     const hours = new Map()
     _.range(24).forEach(number => hours.set(number, { totalSentiment: 0, totalTweets: 0 })) // Initialize map
     _.toArray(tweets).forEach((tweet) => {
@@ -32,7 +31,7 @@ export const createAverageDailySeriesFor = (tweets) => {
  * @param tweets - an array of tweets
  * @returns {Array} of coordinate-arrays e.g. [ [0.2, 3], [2.1, 5], [8, -4] ], where x is time, y is sentiment
  */
-export const createDailySeriesFor = (tweets) => {
+export const createDailyScatterSeriesFor = (tweets) => {
     const hours = []
     _.toArray(tweets).forEach((tweet) => {
         if (tweet.textSentiment) {
@@ -51,7 +50,7 @@ export const createDailySeriesFor = (tweets) => {
  * @param tweets - an array of tweets
  * @returns {Array} of coordinate-arrays e.g. [ [0.2, 3], [2.1, 5], [8, -4] ], where x is time, y is sentiment
  */
-export const createTotalHourlySeriesFor = (tweets) => {
+export const createHourlyTotalSeriesFor = (tweets) => {
     const hours = new Map()
     _.range(24).forEach(number => hours.set(number, 0)) // Initialize map
     _.toArray(tweets).forEach((tweet) => {

@@ -3,7 +3,7 @@ const nlp = require('compromise')
 const sentiment = require('sentiment')
 
 const createStreamForTweetsWith = (credentials, coords = marquetteCampus) => {
-    const twitter = new Twit(credentials)                                // Authenticate application
+    const twitter = new Twit(credentials)                                  // Authenticate application
     return twitter.stream('statuses/filter', { locations: coords })        // listen for tweets bounded by coords (default MU)
 }
 

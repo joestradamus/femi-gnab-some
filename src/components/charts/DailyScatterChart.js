@@ -1,9 +1,7 @@
 import * as React from 'react'
 import ReactHighcharts from 'react-highcharts'
-import moment from 'moment'
-import * as _ from 'lodash'
 
-import { createDailySeriesFor } from './utilities'
+import { createDailyScatterSeriesFor } from './utilities'
 import * as men from '../../../men.json'
 import * as women from '../../../women.json'
 
@@ -119,10 +117,10 @@ export const DailyScatterChart = () => {
         },
         series: [{
             name: 'Men',
-            data: createDailySeriesFor(men)
+            data: createDailyScatterSeriesFor(men)
         }, {
             name: 'Women',
-            data: createDailySeriesFor(women)
+            data: createDailyScatterSeriesFor(women)
 
         }],
         colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', '#FCF4D9'],

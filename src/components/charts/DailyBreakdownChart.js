@@ -2,10 +2,9 @@ import * as React from 'react'
 import ReactHighcharts from 'react-highcharts'
 import * as _ from 'lodash'
 
-import { createTotalHourlySeriesFor } from './utilities'
+import { createHourlyTotalSeriesFor } from './utilities'
 import * as men from '../../../men.json'
 import * as women from '../../../women.json'
-import * as tweets from '../../../tweets.json'
 
 export const DailyBreakdownChart = () => {
     const chartConfig = {
@@ -200,10 +199,10 @@ export const DailyBreakdownChart = () => {
         maskColor: 'rgba(255,255,255,0.3)',
         series: [{
             name: 'Men',
-            data: createTotalHourlySeriesFor(men)
+            data: createHourlyTotalSeriesFor(men)
         }, {
             name: 'Women',
-            data: createTotalHourlySeriesFor(women)
+            data: createHourlyTotalSeriesFor(women)
         }]
     }
 

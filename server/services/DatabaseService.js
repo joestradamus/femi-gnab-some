@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient
 
-const dbConfig =  require('../credentials.json').mongo_url //  process.env.MONGO_URL
+const dbConfig =  /* require('../credentials.json').mongo_url */process.env.MONGO_URL
 const TWEET_TABLE_NAME = 'FILTERED_TWEETS'
 
 const addTweetToDb = (tweet) => {
