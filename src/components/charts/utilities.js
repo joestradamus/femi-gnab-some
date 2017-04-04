@@ -13,12 +13,12 @@ export const createAverageHourlySeriesFor = (tweets) => {
     _.range(24).forEach(number => hours.set(number, { totalSentiment: 0, totalTweets: 0 })) // Initialize map
     _.toArray(tweets).forEach((tweet) => {
         if (tweet.textSentiment) {
-            const hour = moment(tweet.date).hour()
+            const date = moment.parseZone(tweet.date).subtract(5, 'hours') // account for UTC to central time
             const dataPoint = {
-                totalSentiment: hours.get(hour).totalSentiment + tweet.textSentiment.score,
-                totalTweets: hours.get(hour).totalTweets + 1
+                totalSentiment: hours.get(date.hour()).totalSentiment + tweet.textSentiment.score,
+                totalTweets: hours.get(date.hour()).totalTweets + 1
             }
-            hours.set(hour, dataPoint)
+            hours.set(date.hour(), dataPoint)
         }
     })
     return _.range(24).map((hour) => (
@@ -32,17 +32,23 @@ export const createAverageHourlySeriesFor = (tweets) => {
  * @returns {Array} of coordinate-arrays e.g. [ [0.2, 3], [2.1, 5], [8, -4] ], where x is time, y is sentiment
  */
 export const createDailyScatterSeriesFor = (tweets) => {
-    const hours = []
+    const series = []
     _.toArray(tweets).forEach((tweet) => {
         if (tweet.textSentiment) {
-            const hour = moment(tweet.date).hour()
-            const minute = moment(tweet.date).minute()
-            const xValue = hour + (minute / 60)
-            const dataPoint = [xValue, tweet.textSentiment.score]
-            hours.push(dataPoint)
+            const date = moment.parseZone(tweet.date).local()
+            const timeAsReadableString = date.format('h:mm a')
+            const dateAsReadableString = date.format('MM/DD')
+            const dataPoint = {
+                x: moment.parseZone(tweet.date).subtract(5, 'hours').toDate(), // Account for UTC to Central Time
+                y: tweet.textSentiment.score,
+                tweet: tweet,
+                timeString: timeAsReadableString,
+                dateString: dateAsReadableString
+            }
+            series.push(dataPoint)
         }
     })
-    return hours
+    return series
 }
 
 /**
@@ -55,7 +61,7 @@ export const createHourlyTotalSeriesFor = (tweets) => {
     _.range(24).forEach(number => hours.set(number, 0)) // Initialize map
     _.toArray(tweets).forEach((tweet) => {
         if (tweet.textSentiment) {
-            const hour = moment(tweet.date).hour()
+            const hour = moment.parseZone(tweet.date).subtract(5, 'hours').hour() // account for UTC to Central Time
             hours.set(hour, hours.get(hour) + 1)
         }
     })

@@ -1,16 +1,12 @@
 import * as React from 'react'
 import ReactHighcharts from 'react-highcharts'
 
-import { createAverageHourlySeriesFor } from './utilities'
-import * as men from '../../../men.json'
-import * as women from '../../../women.json'
-import * as tweets from '../../../tweets.json'
-
-export const DailySentimentChart = () => {
+export const DailySentimentChart = (allSeries) => {
 
     const chartConfig = {
         chart: {
-            height: 290,
+            height: 500,
+            zoomType: 'xy',
             type: 'area',
             backgroundColor: '#2a2a2b',
             style: {
@@ -111,16 +107,7 @@ export const DailySentimentChart = () => {
                 color: 'white'
             }
         },
-        series: [{
-            name: 'Men',
-            data: createAverageHourlySeriesFor(men)
-        }, {
-            name: 'Women',
-            data: createAverageHourlySeriesFor(women),
-        }, {
-            name: 'Average',
-            data: createAverageHourlySeriesFor(tweets)
-        }],
+        series: allSeries.allSeries,
         colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', '#FCF4D9'],
         legend: {
             itemStyle: {
@@ -135,7 +122,7 @@ export const DailySentimentChart = () => {
         },
         credits: {
             style: {
-                color: '#666'
+                color: '#2a2a2b'
             }
         },
         labels: {

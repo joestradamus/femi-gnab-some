@@ -1,14 +1,10 @@
 import * as React from 'react'
-import ReactHighcharts from 'react-highcharts'
+import ReactHighstock from 'react-highcharts/ReactHighstock'
 
-import { createDailyScatterSeriesFor } from './utilities'
-import * as men from '../../../men.json'
-import * as women from '../../../women.json'
-
-export const DailyScatterChart = () => {
+export const DailyScatterChart = (allSeries) => {
     const chartConfig = {
         chart: {
-            height: 290,
+            height: 600,
             type: 'scatter',
             zoomType: 'xy',
             backgroundColor: '#2a2a2b',
@@ -64,6 +60,7 @@ export const DailyScatterChart = () => {
             tickWidth: 1
         },
         legend: {
+            enabled: true,
             itemStyle: {
                 color: '#E0E0E3'
             },
@@ -77,7 +74,7 @@ export const DailyScatterChart = () => {
         plotOptions: {
             scatter: {
                 marker: {
-                    radius: 5,
+                    radius: 3,
                     states: {
                         hover: {
                             enabled: true,
@@ -94,7 +91,9 @@ export const DailyScatterChart = () => {
                 },
                 tooltip: {
                     headerFormat: '<b>{series.name}</b><br>',
-                    pointFormat: 'At {point.x}, this tweet had an overall sentiment of {point.y}'
+                    pointFormat: 'At <b>{point.timeString}</b> on {point.dateString}, ' +
+                        '<br><b>{point.tweet.user.name}\'s</b> tweet ' +
+                        '<br>had an overall sentiment of <b>{point.y}:</b><br>{point.tweet.text}'
                 }
             },
             series: {
@@ -103,7 +102,8 @@ export const DailyScatterChart = () => {
                 },
                 marker: {
                     lineColor: '#333'
-                }
+                },
+                turboThreshold: 0
             },
             boxplot: {
                 fillColor: '#505053'
@@ -115,15 +115,8 @@ export const DailyScatterChart = () => {
                 color: 'white'
             }
         },
-        series: [{
-            name: 'Men',
-            data: createDailyScatterSeriesFor(men)
-        }, {
-            name: 'Women',
-            data: createDailyScatterSeriesFor(women)
-
-        }],
-        colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', '#FCF4D9'],
+        series: allSeries.allSeries,
+        colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', 'rgb(255, 184, 95)'],
         tooltip: {
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
             style: {
@@ -132,7 +125,7 @@ export const DailyScatterChart = () => {
         },
         credits: {
             style: {
-                color: '#666'
+                color: '#2a2a2b'
             }
         },
         labels: {
@@ -229,7 +222,7 @@ export const DailyScatterChart = () => {
 
     return (
         <div className="daily-scatter-chart">
-            <ReactHighcharts config={ chartConfig } />
+            <ReactHighstock config={ chartConfig } />
         </div>
     )
 }

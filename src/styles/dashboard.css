@@ -1,43 +1,44 @@
 @import url("https://fonts.googleapis.com/css?family=Poiret+One|Righteous|Open+Sans+Condensed:300");
 .chart-area {
-  min-height: 100vh;
+  min-height: 175vh;
   background-color: #2a2a2b;
-  padding: 1vh 1.5vw 5vh 1.5vw; }
+  padding: 5vh 5vw 5vh 5vw; }
+  @media screen and (max-width: 800px) {
+    .chart-area {
+      min-height: 325vh;
+      max-width: 100vw; } }
   .chart-area .chart-area-title {
+    padding-top: 40vh;
     color: #ffb85f;
     font-family: "Poiret One", cursive;
     font-size: 3.5em;
-    text-align: center;
-    padding: 2.5vh 0 2.5vh 0; }
-  .chart-area .daily-breakdown-chart {
-    width: 50vw;
-    position: absolute;
-    background-color: #2a2a2b;
-    box-shadow: 0 0 5px 1px #fcf4d9; }
-    .chart-area .daily-breakdown-chart :hover {
-      box-shadow: 0 0 5px 1px #ffb85f; }
-    @media screen and (max-width: 800px) {
-      .chart-area .daily-breakdown-chart {
-        width: 97vw;
-        position: relative; } }
-  .chart-area .side-charts {
+    text-align: center; }
+  .chart-area .daily-scatter-chart {
     position: relative;
-    float: right;
-    background-color: #2a2a2b; }
-    .chart-area .side-charts .daily-scatter-chart {
-      width: 45vw;
+    width: 90vw;
+    box-shadow: 0 0 5px 1px #fcf4d9; }
+    .chart-area .daily-scatter-chart :hover {
+      box-shadow: 0 0 5px 1px #ffb85f; }
+  .chart-area .auxiliary-charts {
+    padding: 5vh 0 5vh 0; }
+    .chart-area .auxiliary-charts .daily-breakdown-chart {
+      position: relative;
+      float: left;
+      width: 43vw;
       box-shadow: 0 0 5px 1px #fcf4d9; }
-      .chart-area .side-charts .daily-scatter-chart :hover {
-        box-shadow: 0 0 5px 1px #ffb85f; }
       @media screen and (max-width: 800px) {
-        .chart-area .side-charts .daily-scatter-chart {
-          width: 100vw; } }
-    .chart-area .side-charts .daily-sentiment-chart {
-      width: 45vw;
-      margin-bottom: 2vh;
+        .chart-area .auxiliary-charts .daily-breakdown-chart {
+          width: 90vw;
+          margin-bottom: 5vh; } }
+      .chart-area .auxiliary-charts .daily-breakdown-chart :hover {
+        box-shadow: 0 0 5px 1px #ffb85f; }
+    .chart-area .auxiliary-charts .daily-sentiment-chart {
+      position: relative;
+      float: right;
+      width: 43vw;
       box-shadow: 0 0 5px 1px #fcf4d9; }
-      .chart-area .side-charts .daily-sentiment-chart :hover {
-        box-shadow: 0 0 5px 1px #ffb85f; }
       @media screen and (max-width: 800px) {
-        .chart-area .side-charts .daily-sentiment-chart {
-          width: 100vw; } }
+        .chart-area .auxiliary-charts .daily-sentiment-chart {
+          width: 90vw; } }
+      .chart-area .auxiliary-charts .daily-sentiment-chart :hover {
+        box-shadow: 0 0 5px 1px #ffb85f; }

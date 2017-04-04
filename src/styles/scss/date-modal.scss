@@ -1,0 +1,36 @@
+@import "colors";
+@import "fonts";
+
+.date-select-button {
+  padding-top: 45vh;
+}
+.modal-area {
+  padding: 0 0 5vh 0;
+  text-align: center;
+}
+
+.date-modal-button {
+  text-align: center;
+  color: $lightCream;
+  font-family: $headerFont;
+}
+
+.date-modal-back-button {
+  color: $lightCream;
+  font-family: $headerFont;
+}
+
+.date-modal-body {
+  background-color: rgba($chartBackgroundColor, .7);
+  text-align: center;
+  color: $lightCream;
+  font-family: $headerFont;
+}
+
+.date-modal-header {
+  background-color: rgba($chartBackgroundColor, .8);
+}
+
+.date-modal-footer {
+  background-color: rgba($chartBackgroundColor, .8);
+}

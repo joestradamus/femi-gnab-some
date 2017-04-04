@@ -1,59 +1,59 @@
 @import "colors";
 @import "fonts";
 
-$chartBackgroundColor: #2a2a2b;
 
-// TODO: add media queries for mobile
+
 .chart-area {
-  min-height: 100vh;
+  min-height: 175vh;
+  @media screen and (max-width: 800px) {
+    min-height: 325vh;
+    max-width: 100vw;
+  }
   background-color: $chartBackgroundColor;
-  padding: 1vh 1.5vw 5vh 1.5vw;
+  padding: 5vh 5vw 5vh 5vw;
   .chart-area-title {
+    padding-top: 40vh;
     color: $darkOrange;
     font-family: $headerFont;
     font-size: $headerSize;
     text-align: center;
-    padding: 2.5vh 0 2.5vh 0;
   }
-  .daily-breakdown-chart {
-    width: 50vw;
-    position: absolute;
-    background-color: $chartBackgroundColor;
+  .daily-scatter-chart {
+    position: relative;
+    width: 90vw;
     box-shadow: 0 0 5px 1px $lightCream;
     :hover {
       box-shadow: 0 0 5px 1px $darkOrange;
     }
-    @media screen and (max-width: 800px) {
-      width: 97vw;
-      position: relative;
-    }
   }
-  .side-charts {
-    position: relative;
-    float: right;
-    background-color: $chartBackgroundColor;
-    .daily-scatter-chart {
-      width: 45vw;
+
+  .auxiliary-charts {
+    padding: 5vh 0 5vh 0;
+    .daily-breakdown-chart {
+      position: relative;
+      float: left;
+      width: 43vw;
+      @media screen and (max-width: 800px) {
+        width: 90vw;
+        margin-bottom: 5vh;
+      }
       box-shadow: 0 0 5px 1px $lightCream;
       :hover {
         box-shadow: 0 0 5px 1px $darkOrange;
-      }
-      @media screen and (max-width: 800px) {
-        width: 100vw;
       }
     }
     .daily-sentiment-chart {
-      width: 45vw;
-      margin-bottom: 2vh;
+      position: relative;
+      float: right;
+      width: 43vw;
+      @media screen and (max-width: 800px) {
+        width: 90vw;
+      }
       box-shadow: 0 0 5px 1px $lightCream;
       :hover {
         box-shadow: 0 0 5px 1px $darkOrange;
       }
-      @media screen and (max-width: 800px) {
-        width: 100vw;
-      }
     }
   }
-
 }
 

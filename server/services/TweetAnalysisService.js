@@ -1,6 +1,7 @@
 const Twit = require('twit')
 const nlp = require('compromise')
 const sentiment = require('sentiment')
+const moment = require('moment')
 
 const createStreamForTweetsWith = (credentials, coords = marquetteCampus) => {
     const twitter = new Twit(credentials)                                  // Authenticate application
@@ -17,10 +18,10 @@ const marquetteCampus = [ // Top right, bottom left coordinates
 const extractDetailsFromRaw = (tweet) => {
     return {
         id: tweet.id,
-        date: tweet.created_at,
+        date: moment(tweet.created_at).subtract(5, 'hours').toDate(), // Account for UTC to Central Time conversion
         text: tweet.text,
         textSentiment: sentiment(tweet.text),        // get sentiment of text, as well as all positive, negative words
-        textTopics: nlp(tweet.text).people().data(), // get info on sentence's topics (people, places)
+        textTopics: nlp(tweet.text).topics().data(), // get info on sentence's topics (people, places)
         user: {
             id: tweet.user.id,
             name: tweet.user.name,
@@ -36,7 +37,7 @@ const extractDetailsFromRaw = (tweet) => {
     }
 }
 
-const containsRelevantDetails = (tweet) => {
+const containsGenderedDetails = (tweet) => {
     return (
         tweet.textSentiment
         && tweet.textSentiment.score !== 0          // has some sentiment
@@ -48,6 +49,6 @@ const containsRelevantDetails = (tweet) => {
 
 module.exports = {
     createStreamForTweetsWith: createStreamForTweetsWith,
-    containsRelevantDetails: containsRelevantDetails,
+    containsGenderedDetails: containsGenderedDetails,
     extractDetailsFromRaw: extractDetailsFromRaw
 }
