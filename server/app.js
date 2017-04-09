@@ -24,6 +24,7 @@ const connectDbWith = (deploymentMode) => {
             mongo_url: process.env.MONGO_URL                         // With a runtime environment variable "MONGO_URL"
         }
         db = initializeWith(credentials)
+        db.migrateToTableWithTweets()
         connectDbToLiveTweets(db, credentials)
     }
     else {
