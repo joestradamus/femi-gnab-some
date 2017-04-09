@@ -46,7 +46,7 @@ const connectDbToLiveTweets = (db, credentials) => {
 }
 
 const app = express()
-const db = connectDbWith(DEPLOYMENT_MODE.DEVELOPMENT)
+const db = connectDbWith(DEPLOYMENT_MODE.PRODUCTION)
 
 // Serve client-side code HTML, JS, and CSS
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
