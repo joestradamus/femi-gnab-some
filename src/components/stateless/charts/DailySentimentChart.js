@@ -1,11 +1,13 @@
 import * as React from 'react'
 import ReactHighcharts from 'react-highcharts'
+import * as _ from 'lodash'
+import moment from 'moment'
 
-export const DailySentimentChart = (allSeries) => {
+export const DailySentimentChart = (props) => {
 
     const chartConfig = {
         chart: {
-            height: 500,
+            height: 600,
             zoomType: 'xy',
             type: 'area',
             backgroundColor: '#2a2a2b',
@@ -22,23 +24,19 @@ export const DailySentimentChart = (allSeries) => {
             }
         },
         subtitle: {
-            text: 'total sentiment of tweets divided by total number of tweets',
+            text: 'Average and Average(follower-adjusted) Series',
             style: {
-                color: '#E0E0E3',
-                textTransform: 'uppercase'
+                color: '#E0E0E3'
             }
         },
         xAxis: {
-            allowDecimals: false,
+            categories: _.range(24).map(hour => moment().startOf('hour').hour(hour).format('h:mm a')),
+            gridLineColor: '#707073',
             labels: {
-                formatter: function () {
-                    return this.value;
-                },
                 style: {
                     color: '#E0E0E3'
                 }
             },
-            gridLineColor: '#707073',
             lineColor: '#707073',
             minorGridLineColor: '#505053',
             tickColor: '#707073',
@@ -47,7 +45,7 @@ export const DailySentimentChart = (allSeries) => {
                     color: '#A0A0A3'
 
                 },
-                text: "Hour of Day"
+                text: 'Hour of Day'
             }
         },
         yAxis: {
@@ -69,11 +67,12 @@ export const DailySentimentChart = (allSeries) => {
             tickWidth: 1,
         },
         tooltip: {
+            split: true,
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
             style: {
                 color: '#F0F0F0'
             },
-            pointFormat: 'At hour {point.x} of the day, {series.name} had a sentiment of <b>{point.y:,.2f}</b><br/> in their tweets'
+            pointFormat: '{series.name}-authored tweets had an overall sentiment of <b>{point.y:,.1f}</b><br/>'
         },
         plotOptions: {
             area: {
@@ -107,8 +106,8 @@ export const DailySentimentChart = (allSeries) => {
                 color: 'white'
             }
         },
-        series: allSeries.allSeries,
-        colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', '#FCF4D9'],
+        series: props.data,
+        colors: ['rgb(0, 170, 160)', 'rgb(142, 210, 201)', 'rgb(255, 122, 90)', 'rgb(255, 184, 95)'],
         legend: {
             itemStyle: {
                 color: '#E0E0E3'

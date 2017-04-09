@@ -1,11 +1,11 @@
 import * as React from 'react'
-import ReactHighstock from 'react-highcharts/ReactHighstock'
+import ReactHighcharts from 'react-highcharts'
 
-export const DailyScatterChart = (allSeries) => {
+export const WordCountBarChart = (props) => {
     const chartConfig = {
         chart: {
             height: 600,
-            type: 'scatter',
+            type: 'column',
             zoomType: 'xy',
             backgroundColor: '#2a2a2b',
             style: {
@@ -14,23 +14,14 @@ export const DailyScatterChart = (allSeries) => {
             plotBorderColor: '#606063'
         },
         title: {
-            text: 'Tweets in a Day',
+            text: `Words Used by ${props.name} Users`,
             style: {
                 color: '#E0E0E3',
                 fontSize: '20px'
             }
         },
         xAxis: {
-            title: {
-                enabled: true,
-                text: 'Hour of Day',
-                style: {
-                    color: '#A0A0A3'
-                }
-            },
-            startOnTick: true,
-            endOnTick: true,
-            showLastLabel: true,
+            type: 'category',
             gridLineColor: '#707073',
             labels: {
                 style: {
@@ -39,11 +30,17 @@ export const DailyScatterChart = (allSeries) => {
             },
             lineColor: '#707073',
             minorGridLineColor: '#505053',
-            tickColor: '#707073'
+            tickColor: '#707073',
+            title: {
+                style: {
+                    color: '#A0A0A3'
+
+                }
+            }
         },
         yAxis: {
             title: {
-                text: 'Overall Sentiment',
+                text: 'Total count',
                 style: {
                     color: '#A0A0A3'
                 }
@@ -57,7 +54,8 @@ export const DailyScatterChart = (allSeries) => {
             lineColor: '#707073',
             minorGridLineColor: '#505053',
             tickColor: '#707073',
-            tickWidth: 1
+            tickWidth: 1,
+
         },
         legend: {
             enabled: true,
@@ -72,38 +70,16 @@ export const DailyScatterChart = (allSeries) => {
             }
         },
         plotOptions: {
-            scatter: {
-                marker: {
-                    radius: 3,
-                    states: {
-                        hover: {
-                            enabled: true,
-                            lineColor: 'rgb(100,100,100)'
-                        }
-                    }
-                },
-                states: {
-                    hover: {
-                        marker: {
-                            enabled: false
-                        }
-                    }
-                },
-                tooltip: {
-                    headerFormat: '<b>{series.name}</b><br>',
-                    pointFormat: 'At <b>{point.timeString}</b> on {point.dateString}, ' +
-                        '<br><b>{point.tweet.user.name}\'s</b> tweet ' +
-                        '<br>had an overall sentiment of <b>{point.y}:</b><br>{point.tweet.text}'
-                }
-            },
             series: {
+                borderWidth: 0,
                 dataLabels: {
-                    color: '#B0B0B3'
+                    enabled: true,
+                    color: '#B0B0B3',
+                    format: '{point.y}'
                 },
                 marker: {
                     lineColor: '#333'
-                },
-                turboThreshold: 0
+                }
             },
             boxplot: {
                 fillColor: '#505053'
@@ -115,31 +91,24 @@ export const DailyScatterChart = (allSeries) => {
                 color: 'white'
             }
         },
-        series: allSeries.allSeries,
-        colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', 'rgb(255, 184, 95)'],
+
         tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b>',
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
             style: {
                 color: '#F0F0F0'
             }
         },
+        colors: [props.color, props.colorLight],
         credits: {
             style: {
-                color: '#2a2a2b'
+                color: '#666'
             }
         },
         labels: {
             style: {
                 color: '#707073'
-            }
-        },
-
-        drilldown: {
-            activeAxisLabelStyle: {
-                color: '#F0F0F3'
-            },
-            activeDataLabelStyle: {
-                color: '#F0F0F3'
             }
         },
 
@@ -151,6 +120,8 @@ export const DailyScatterChart = (allSeries) => {
                 }
             }
         },
+
+        // scroll charts
         rangeSelector: {
             buttonTheme: {
                 fill: '#505053',
@@ -211,18 +182,23 @@ export const DailyScatterChart = (allSeries) => {
             trackBackgroundColor: '#404043',
             trackBorderColor: '#404043'
         },
-
         legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
         background2: '#505053',
         dataLabelsColor: '#B0B0B3',
         textColor: '#C0C0C0',
         contrastTextColor: '#F0F0F3',
-        maskColor: 'rgba(255,255,255,0.3)'
+        maskColor: 'rgba(255,255,255,0.3)',
+        series: [
+            {
+                name: `The word`,
+                colorByPoint: true,
+                data: props.data
+            }
+        ]
     }
-
-    return (
-        <div className="daily-scatter-chart">
-            <ReactHighstock config={ chartConfig } />
+    return(
+        <div className="word-count-bar-chart">
+            <ReactHighcharts config={ chartConfig } />
         </div>
     )
 }

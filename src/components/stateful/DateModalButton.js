@@ -30,8 +30,9 @@ export class DateModalButton extends React.Component {
                 color="warning"
                 onClick={ this.toggle }
                 outline={ true }
+                size="lg"
             >
-                Select Day
+                Begin
             </Button>
             <Modal
                 isOpen={ this.state.modal }

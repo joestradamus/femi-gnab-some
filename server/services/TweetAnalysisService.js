@@ -8,12 +8,12 @@ const createStreamForTweetsWith = (credentials, coords = marquetteCampus) => {
     return twitter.stream('statuses/filter', { locations: coords })        // listen for tweets bounded by coords (default MU)
 }
 
-const marquetteCampus = [ // Top right, bottom left coordinates
-    '-87.942874',         // longitude @ 8th/State St.
-    '43.037529',          // latitude @ 8th/State St.
-    '-87.9210',           // longitude @ 23rd/Michigan St.
-    '43.0427577'          // latitude @ 23rd/Michigan St.
-]
+const marquetteCampus = [ // bottom left -> top right coordinate system
+    '-87.942874',         // longitude @ 24th/Michigan.
+    '43.037529',          // latitude @ 24th/Michigan.
+    '-87.9210',           // longitude @ 8th/State St.
+    '43.0427577'          // latitude @ 8th/State St.
+];
 
 const extractDetailsFromRaw = (tweet) => {
     return {
@@ -33,14 +33,15 @@ const extractDetailsFromRaw = (tweet) => {
             statusesCount: tweet.user.statuses_count,
             profileImage: tweet.user.profile_image_url
         },
-        usersMentioned: tweet.user.user_mentions
+        coordinates: tweet.coordinates,
+        inResponseTo: tweet.in_reply_to_screen_name,
+        entities: tweet.entities
     }
 }
 
-const containsGenderedDetails = (tweet) => {
+const containsGenderAndSentiment = (tweet) => {
     return (
-        tweet.textSentiment
-        && tweet.textSentiment.score !== 0          // has some sentiment
+        tweet.textSentiment                         // has some sentiment
         && tweet.user                               // has a clear user
         && tweet.user.guessedGender                 // user's gender is "guessable"
         && (tweet.user.guessedGender === "Female" || tweet.user.guessedGender === "Male")
@@ -49,6 +50,6 @@ const containsGenderedDetails = (tweet) => {
 
 module.exports = {
     createStreamForTweetsWith: createStreamForTweetsWith,
-    containsGenderedDetails: containsGenderedDetails,
+    containsGenderAndSentiment: containsGenderAndSentiment,
     extractDetailsFromRaw: extractDetailsFromRaw
 }

@@ -37,7 +37,7 @@ const connectDbToLiveTweets = (db, credentials) => {
     const stream = tweetAnalysisService.createStreamForTweetsWith(credentials)
     stream.on('tweet', (tweet) => {                                                // on tweet
         const filteredTweet = tweetAnalysisService.extractDetailsFromRaw(tweet)    // get the data that's relevant
-        tweetAnalysisService.containsGenderedDetails(filteredTweet)                // the tweet has some emotional sentiment, gender involved
+        tweetAnalysisService.containsGenderAndSentiment(filteredTweet)                // the tweet has some emotional sentiment, gender involved
             ? db.addTweetToDbTable(filteredTweet, TABLES.GENDERED_TWEETS)
             : db.addTweetToDbTable(filteredTweet, TABLES.UNGENDERED_TWEETS)
 
@@ -51,8 +51,8 @@ const db = connectDbWith(DEPLOYMENT_MODE.DEVELOPMENT)
 app.use(express.static(path.resolve(__dirname, '..', 'build')))
 app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html')))
 // Set up API endpoints
-app.get('/api/tweets', (req, res) => db.getAllTweets(res))
-app.get('/api/tweets/:startDate/:endDate', (req, res) => db.getAllTweetsOnDate(req, res))
+app.get('/api/tweets/all', (req, res) => db.getAllTweets(res))
+app.get('/api/tweets/:startDate/:endDate', (req, res) => db.getAllTweetsInDateRange(req, res))
 app.get('/api/female', (req, res) => db.getAllTweetsByGender('Female', res))
 app.get('/api/male', (req, res) => db.getAllTweetsByGender('Male', res))
 

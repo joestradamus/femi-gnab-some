@@ -10,20 +10,33 @@ import * as _ from 'lodash'
  */
 export const createAverageHourlySeriesFor = (tweets) => {
     const hours = new Map()
-    _.range(24).forEach(number => hours.set(number, { totalSentiment: 0, totalTweets: 0 })) // Initialize map
-    _.toArray(tweets).forEach((tweet) => {
+    const hoursWithFollowersWeightedSet = new Map()
+    _.range(24).forEach(number => {
+            hours.set(number, { totalSentiment: 0, totalTweets: 0 })
+            hoursWithFollowersWeightedSet.set(number, { totalSentiment: 0, totalTweets: 0 })
+        }
+    )
+    // Initialize map
+    _.toArray(tweets).forEach(tweet => {
         if (tweet.textSentiment) {
             const date = moment.parseZone(tweet.date).subtract(5, 'hours') // account for UTC to central time
-            const dataPoint = {
+            hours.set(date.hour(), {
                 totalSentiment: hours.get(date.hour()).totalSentiment + tweet.textSentiment.score,
                 totalTweets: hours.get(date.hour()).totalTweets + 1
-            }
-            hours.set(date.hour(), dataPoint)
+            })
+            hoursWithFollowersWeightedSet.set(date.hour(), {
+                totalSentiment: hours.get(date.hour()).totalSentiment + (tweet.textSentiment.score * tweet.user.followerCount),
+                totalTweets: hours.get(date.hour()).totalTweets + 1
+            })
         }
     })
-    return _.range(24).map((hour) => (
-        hours.get(hour).totalSentiment / hours.get(hour).totalTweets
-    ))
+    const hourly = _.range(24).map(hour => hours.get(hour).totalSentiment / hours.get(hour).totalTweets)
+    const hourlyWeighted = _.range(24).map(hour =>
+        hoursWithFollowersWeightedSet.get(hour).totalSentiment / hours.get(hour).totalTweets)
+    return {
+        hourly: hourly,
+        hourlyWeighted: hourlyWeighted
+    }
 }
 
 /**
@@ -66,4 +79,29 @@ export const createHourlyTotalSeriesFor = (tweets) => {
         }
     })
     return _.range(24).map(hour => hours.get(hour))
+}
+
+export const aggregateWordsUsedIn = (tweets) => {
+    const wordCount = new Map()
+    _.toArray(tweets).filter(tweet => tweet.textSentiment && tweet.textSentiment.words)
+        .forEach(tweet => tweet.textSentiment.words // make sure the user said something sentimental
+            .forEach(word => {
+                if (word !== "") { // Ignore word if it's the empty string token
+                    wordCount.has(word)
+                        ? wordCount.set(word, wordCount.get(word) + 1) // increment count by one
+                        : wordCount.set(word, 1) // set to one if not already in map
+                }
+            }))
+    // turn map into array of objects
+    const wordArray = _.toArray(wordCount).map(array => {
+        const word = array[0]
+        const count = array[1]
+        return {
+            name: word,
+            y: count
+        }
+    })
+    const sortedWords = _.sortBy(wordArray, ['y', 'word']) // sort in increasing order by count of word, then alphabetically
+    const top100WordsSorted = _.takeRight(sortedWords, 100)
+    return top100WordsSorted
 }

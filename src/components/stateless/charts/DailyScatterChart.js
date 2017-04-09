@@ -1,13 +1,12 @@
 import * as React from 'react'
-import ReactHighcharts from 'react-highcharts'
-import * as _ from 'lodash'
+import ReactHighstock from 'react-highcharts/ReactHighstock'
 
-export const DailyBreakdownChart = (allSeries) => {
+export const DailyScatterChart = (props) => {
     const chartConfig = {
         chart: {
-            type: 'bar',
-            zoomType: 'xy;',
-            height: 500,
+            height: 600,
+            type: 'scatter',
+            zoomType: 'xy',
             backgroundColor: '#2a2a2b',
             style: {
                 fontFamily: '\'Unica One\', sans-serif'
@@ -15,14 +14,23 @@ export const DailyBreakdownChart = (allSeries) => {
             plotBorderColor: '#606063'
         },
         title: {
-            text: 'Tweets by Gender',
+            text: 'Tweets in a Day',
             style: {
                 color: '#E0E0E3',
                 fontSize: '20px'
             }
         },
         xAxis: {
-            categories: _.range(24).map(number => `Hour ${number}`),
+            title: {
+                enabled: true,
+                text: 'Time',
+                style: {
+                    color: '#A0A0A3'
+                }
+            },
+            startOnTick: true,
+            endOnTick: true,
+            showLastLabel: true,
             gridLineColor: '#707073',
             labels: {
                 style: {
@@ -31,19 +39,11 @@ export const DailyBreakdownChart = (allSeries) => {
             },
             lineColor: '#707073',
             minorGridLineColor: '#505053',
-            tickColor: '#707073',
-            title: {
-                style: {
-                    color: '#A0A0A3'
-
-                },
-                text: 'Hour of Day'
-            }
+            tickColor: '#707073'
         },
         yAxis: {
-            min: 0,
             title: {
-                text: 'Total Number of Tweets',
+                text: 'Sentiment',
                 style: {
                     color: '#A0A0A3'
                 }
@@ -57,16 +57,10 @@ export const DailyBreakdownChart = (allSeries) => {
             lineColor: '#707073',
             minorGridLineColor: '#505053',
             tickColor: '#707073',
-            tickWidth: 1,
-        },
-        colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', '#FCF4D9'],
-        tooltip: {
-            backgroundColor: 'rgba(0, 0, 0, 0.85)',
-            style: {
-                color: '#F0F0F0'
-            }
+            tickWidth: 1
         },
         legend: {
+            enabled: true,
             itemStyle: {
                 color: '#E0E0E3'
             },
@@ -78,14 +72,38 @@ export const DailyBreakdownChart = (allSeries) => {
             }
         },
         plotOptions: {
+            scatter: {
+                marker: {
+                    radius: 3,
+                    states: {
+                        hover: {
+                            enabled: true,
+                            lineColor: 'rgb(100,100,100)'
+                        }
+                    }
+                },
+                states: {
+                    hover: {
+                        marker: {
+                            enabled: false
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: 'At <b>{point.timeString}</b> on {point.dateString}, ' +
+                        '<br><b>{point.tweet.user.name}\'s</b> tweet ' +
+                        '<br>had an overall sentiment of <b>{point.y}:</b><br>{point.tweet.text}'
+                }
+            },
             series: {
-                stacking: 'normal',
                 dataLabels: {
                     color: '#B0B0B3'
                 },
                 marker: {
                     lineColor: '#333'
-                }
+                },
+                turboThreshold: 0
             },
             boxplot: {
                 fillColor: '#505053'
@@ -95,6 +113,14 @@ export const DailyBreakdownChart = (allSeries) => {
             },
             errorbar: {
                 color: 'white'
+            }
+        },
+        series: props.data,
+        colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', 'rgb(255, 184, 95)'],
+        tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            style: {
+                color: '#F0F0F0'
             }
         },
         credits: {
@@ -125,8 +151,6 @@ export const DailyBreakdownChart = (allSeries) => {
                 }
             }
         },
-
-        // scroll charts
         rangeSelector: {
             buttonTheme: {
                 fill: '#505053',
@@ -193,13 +217,12 @@ export const DailyBreakdownChart = (allSeries) => {
         dataLabelsColor: '#B0B0B3',
         textColor: '#C0C0C0',
         contrastTextColor: '#F0F0F3',
-        maskColor: 'rgba(255,255,255,0.3)',
-        series: allSeries.allSeries
+        maskColor: 'rgba(255,255,255,0.3)'
     }
 
-    return(
-        <div className="daily-breakdown-chart">
-            <ReactHighcharts config={ chartConfig } />
+    return (
+        <div className="daily-scatter-chart">
+            <ReactHighstock config={ chartConfig } />
         </div>
     )
 }

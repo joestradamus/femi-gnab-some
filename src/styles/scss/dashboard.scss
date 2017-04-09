@@ -1,14 +1,20 @@
 @import "colors";
 @import "fonts";
 
-
+@mixin create-default-chart-styling() {
+  height: 600px;
+  position: relative;
+  width: 90vw;
+  box-shadow: 0 0 5px 1px $lightCream;
+  margin-bottom: 5vh;
+  :hover {
+    box-shadow: 0 0 5px 1px $darkOrange;
+  }
+}
 
 .chart-area {
-  min-height: 175vh;
-  @media screen and (max-width: 800px) {
-    min-height: 325vh;
-    max-width: 100vw;
-  }
+  min-height: 100vh;
+  max-width: 100vw;
   background-color: $chartBackgroundColor;
   padding: 5vh 5vw 5vh 5vw;
   .chart-area-title {
@@ -18,42 +24,11 @@
     font-size: $headerSize;
     text-align: center;
   }
-  .daily-scatter-chart {
-    position: relative;
-    width: 90vw;
-    box-shadow: 0 0 5px 1px $lightCream;
-    :hover {
-      box-shadow: 0 0 5px 1px $darkOrange;
-    }
-  }
-
-  .auxiliary-charts {
-    padding: 5vh 0 5vh 0;
-    .daily-breakdown-chart {
-      position: relative;
-      float: left;
-      width: 43vw;
-      @media screen and (max-width: 800px) {
-        width: 90vw;
-        margin-bottom: 5vh;
-      }
-      box-shadow: 0 0 5px 1px $lightCream;
-      :hover {
-        box-shadow: 0 0 5px 1px $darkOrange;
-      }
-    }
-    .daily-sentiment-chart {
-      position: relative;
-      float: right;
-      width: 43vw;
-      @media screen and (max-width: 800px) {
-        width: 90vw;
-      }
-      box-shadow: 0 0 5px 1px $lightCream;
-      :hover {
-        box-shadow: 0 0 5px 1px $darkOrange;
-      }
-    }
+  .charts {
+    .daily-scatter-chart { @include create-default-chart-styling(); }
+    .daily-breakdown-chart { @include create-default-chart-styling(); }
+    .daily-sentiment-chart { @include create-default-chart-styling(); }
+    .word-count-bar-chart { @include create-default-chart-styling; }
   }
 }
 

@@ -1,6 +1,5 @@
 const MongoClient = require('mongodb').MongoClient
 const moment = require('moment')
-const tweets = require('../../tweets.json')
 const TABLES = {
     GENDERED_TWEETS: 'GENDERED_TWEETS',
     UNGENDERED_TWEETS: 'UNGENDERED_TWEETS'
@@ -27,7 +26,6 @@ const initialize = (credentials) => {
                         throw `Could not save tweet to database: ${err}`
                     }
                 })
-                db.close()
             } else {
                 throw `ERROR connecting to database, unable to connect to mongo instance with credentials ${JSON.stringify(credentials)}`
             }
@@ -43,9 +41,8 @@ const initialize = (credentials) => {
                             $match: { "user.guessedGender": gender }
                         }
                     ]).toArray( (err, result) => {
-                        res.send( JSON.stringify(result) )
+                        res.send(result)
                     })
-                    db.close()
                 } else {
                     throw `Could not read tweets from database: ${err}`
                 }
@@ -57,47 +54,43 @@ const initialize = (credentials) => {
 
     const getAllTweets = (res) => {
         try {
-            // MongoClient.connect(credentials.mongo_url, (err, db) => {
-            //     if (!err) {
-            //         db.collection(TABLES.GENDERED_TWEETS).aggregate()
-            //             .toArray( (err, result) => {
-            //                 res.send( 200, result )
-            //             })
-            //         db.close()
-            //     } else {
-            //         throw `Could not read tweets from database: ${err}`
-            //     }
-            // })
-            res.send( tweets )
+            MongoClient.connect(credentials.mongo_url, (err, db) => {
+                if (!err) {
+                    db.collection(TABLES.GENDERED_TWEETS).aggregate()
+                        .toArray( (err, result) => {
+                            res.send(result)
+                        })
+                } else {
+                    throw `Could not read tweets from database: ${err}`
+                }
+            })
         } catch (err) {
             console.log(err)
         }
     }
 
-    const getAllTweetsOnDate = (req, res) => {
-        const dateStart = moment(req.startDate).startOf('day').toDate().toISOString()
-        const dateEnd = moment(req.endDate).endOf('day').toDate().toISOString()
+    const getAllTweetsInDateRange = (req, res) => {
+        const dateStart = moment(req.params.startDate).toDate()
+        const dateEnd = moment(req.params.endDate).toDate()
         try {
             MongoClient.connect(credentials.mongo_url, (err, db) => {
                 if (!err) {
                     db.collection(TABLES.GENDERED_TWEETS).aggregate([
                         {
                             $match: {
-                                "date":
+                                "textSentiment.score":
                                     {
-                                        $lt: dateEnd,
-                                        $gte: dateStart
+                                        $lte: dateEnd,
+                                        $gt: dateStart
                                     }
                             }
                         }
                     ]).toArray( (err, result) => {
-                        res.send( 200, result )
+                        res.send(result)
                     })
-                    db.close()
                 } else {
                     throw `Could not read tweets from database: ${err}`
                 }
-                db.close()
             })
         } catch (err) {
             console.log(err)
@@ -132,12 +125,10 @@ const initialize = (credentials) => {
         addTweetToDbTable: addTweetToDbTable,
         getAllTweetsByGender: getAllTweetsByGender,
         getAllTweets: getAllTweets,
-        getAllTweetsOnDate: getAllTweetsOnDate,
+        getAllTweetsInDateRange: getAllTweetsInDateRange,
         migrateToTableWithTweets: migrateToTableWithTweets
     }
 }
-
-
 
 module.exports = {
     initialize: initialize,

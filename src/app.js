@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Dashboard } from './components/Dashboard'
+import { Dashboard } from './components/stateful/Dashboard'
 
 class App extends Component {
     render() {
