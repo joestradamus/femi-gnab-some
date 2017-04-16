@@ -15,7 +15,6 @@
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "mongodb": "^2.2.25",
-    "path": "^0.12.7",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-shallow-compare": "^15.4.2",
@@ -26,7 +25,6 @@
     "react-scripts": "0.9.3",
     "reactstrap": "^4.4.0",
     "sentiment": "^3.0.1",
-    "spawn-sync": "^1.0.15",
     "twit": "^2.2.5"
   },
   "scripts": {

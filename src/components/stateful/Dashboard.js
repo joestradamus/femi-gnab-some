@@ -1,25 +1,26 @@
 import React from 'react'
 import { Button } from 'reactstrap'
 import * as _ from 'lodash'
+import moment from 'moment'
 
-import * as tweets from '../../../tweets.json'
 import * as util from '../../utilities'
 import { DailySentimentChart } from '../stateless/charts/DailySentimentChart'
 import { DailyScatterChart } from '../stateless/charts/DailyScatterChart'
 import { DailyBreakdownChart } from '../stateless/charts/DailyBreakdownChart'
 import { WordCountBarChart } from '../stateless/charts/WordCountBarChart'
 import { DateModalButton } from './DateModalButton'
+import loader from '../../../public/loader.svg'
 
-// async function getAllTweetsSince(day = moment().startOf('day')) {
-//     const startDate = day.toDate()
-//     const endDate = moment().endOf('day').toDate()
-//     const url = `/api/tweets/${startDate}/${endDate}`
-//     try {
-//         return await fetch(url, { method: 'get'}).then(response => _.toArray(tweets))
-//     } catch (e) {
-//         window.alert(`Sorry, couldn't fetch from server: ${e}`)
-//     }
-// }
+async function getAllTweetsSince(day = moment().startOf('day')) {
+    const startDate = day.toDate()
+    const endDate = moment().endOf('day').toDate()
+    const url = `/api/tweets/${startDate}/${endDate}`
+    try {
+        return await fetch(url, { method: 'get'}).then(response => { return response })
+    } catch (e) {
+        window.alert(`Sorry, couldn't fetch data from the server: ${e}`)
+    }
+}
 
 // asynchronously load data, then return it formatted
 async function calculateAllSeriesWithTweets(tweets) {
@@ -67,11 +68,12 @@ export class Dashboard extends React.Component {
 
     resetState = () => this.setState(this.getInitialState())
 
-    handleClick = () => this.loadCharts()
+    loadSinceDate = (date) => this.loadCharts(date)
 
-    loadCharts = () => {
+    loadCharts = (date) => {
         this.setState({ loading: true, loaded: false, data: {} })
-        calculateAllSeriesWithTweets(_.toArray(tweets)).then(series => this.load(series))
+        getAllTweetsSince(date).then(response => response.json().then(tweets => 
+            calculateAllSeriesWithTweets(tweets).then(series => this.load(series))))
     }
 
     load = (data) => this.setState({ loading: false, loaded: true, data: data })
@@ -120,7 +122,9 @@ export class Dashboard extends React.Component {
             }
             else if (this.state.loading === true) {
                 return(
-                    <div> <h1 className="home-banner"> Loading... </h1></div>
+                    <div> 
+                        <img src={ loader } className="loading-icon" alt="loading icon" />
+                    </div>
                 )
             }
             else {
@@ -129,12 +133,34 @@ export class Dashboard extends React.Component {
                         <div className="modal-area">
                             <DateModalButton dateButtons={[
                                 <Button
+                                    key={ 0 }
                                     className="date-modal-button"
-                                    onClick={ this.handleClick.bind(this) }
+                                    onClick={ this.loadSinceDate.bind(this, moment().subtract(1, 'days')) }
                                     color="info"
+                                    block={ true }
                                     size="lg"
                                 >
-                                    Load data
+                                    Yesterday
+                                </Button>,
+                                <Button
+                                    key={ 1 }
+                                    className="date-modal-button"
+                                    onClick={ this.loadSinceDate.bind(this, moment().subtract(7, 'days')) }
+                                    color="info"
+                                    block={ true }
+                                    size="lg"
+                                >
+                                    Last 7 Days
+                                </Button>,
+                                <Button
+                                    key={ 2 }
+                                    className="date-modal-button"
+                                    onClick={ this.loadSinceDate.bind(this, moment().subtract(30, 'days')) }
+                                    color="info"
+                                    block={ true }
+                                    size="lg"
+                                >
+                                    Last 30 days
                                 </Button>
                             ]}/>
                         </div>

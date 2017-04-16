@@ -106,8 +106,10 @@
 
 .date-modal-button {
   text-align: center;
+  margin: auto;
   color: #fcf4d9;
-  font-family: "Poiret One", cursive; }
+  font-family: "Poiret One", cursive;
+  display: block !important; }
 
 .date-modal-back-button {
   color: #fcf4d9;

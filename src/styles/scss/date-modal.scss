@@ -11,8 +11,10 @@
 
 .date-modal-button {
   text-align: center;
+  margin: auto;
   color: $lightCream;
   font-family: $headerFont;
+  display: block !important;
 }
 
 .date-modal-back-button {

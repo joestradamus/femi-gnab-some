@@ -40,12 +40,11 @@ const connectDbToLiveTweets = (db, credentials) => {
         tweetAnalysisService.containsGenderAndSentiment(filteredTweet)                // the tweet has some emotional sentiment, gender involved
             ? db.addTweetToDbTable(filteredTweet, TABLES.GENDERED_TWEETS)
             : db.addTweetToDbTable(filteredTweet, TABLES.UNGENDERED_TWEETS)
-
     })
 }
 
 const app = express()
-const db = connectDbWith(DEPLOYMENT_MODE.PRODUCTION)
+const db = connectDbWith(DEPLOYMENT_MODE.DEVELOPMENT)
 
 // Serve client-side code HTML, JS, and CSS
 app.use(express.static(path.resolve(__dirname, '..', 'build')))

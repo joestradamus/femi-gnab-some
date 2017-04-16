@@ -78,7 +78,7 @@ const initialize = (credentials) => {
                     db.collection(TABLES.GENDERED_TWEETS).aggregate([
                         {
                             $match: {
-                                "textSentiment.score":
+                                "date":
                                     {
                                         $lte: dateEnd,
                                         $gt: dateStart

@@ -17,9 +17,9 @@ export const createAverageHourlySeriesFor = (tweets) => {
         }
     )
     // Initialize map
-    _.toArray(tweets).forEach(tweet => {
+    tweets.forEach(tweet => {
         if (tweet.textSentiment) {
-            const date = moment.parseZone(tweet.date).subtract(5, 'hours') // account for UTC to central time
+            const date = moment.parseZone(tweet.date) // account for UTC to central time
             hours.set(date.hour(), {
                 totalSentiment: hours.get(date.hour()).totalSentiment + tweet.textSentiment.score,
                 totalTweets: hours.get(date.hour()).totalTweets + 1
@@ -46,13 +46,13 @@ export const createAverageHourlySeriesFor = (tweets) => {
  */
 export const createDailyScatterSeriesFor = (tweets) => {
     const series = []
-    _.toArray(tweets).forEach((tweet) => {
+    tweets.forEach(tweet => {
         if (tweet.textSentiment) {
-            const date = moment.parseZone(tweet.date).local()
+            const date = moment.parseZone(tweet.date)
             const timeAsReadableString = date.format('h:mm a')
             const dateAsReadableString = date.format('MM/DD')
             const dataPoint = {
-                x: moment.parseZone(tweet.date).subtract(5, 'hours').toDate(), // Account for UTC to Central Time
+                x: moment.parseZone(tweet.date).toDate(), // Account for UTC to Central Time
                 y: tweet.textSentiment.score,
                 tweet: tweet,
                 timeString: timeAsReadableString,
@@ -72,9 +72,9 @@ export const createDailyScatterSeriesFor = (tweets) => {
 export const createHourlyTotalSeriesFor = (tweets) => {
     const hours = new Map()
     _.range(24).forEach(number => hours.set(number, 0)) // Initialize map
-    _.toArray(tweets).forEach((tweet) => {
+    tweets.forEach(tweet => {
         if (tweet.textSentiment) {
-            const hour = moment.parseZone(tweet.date).subtract(5, 'hours').hour() // account for UTC to Central Time
+            const hour = moment.parseZone(tweet.date).hour() // account for UTC to Central Time
             hours.set(hour, hours.get(hour) + 1)
         }
     })
