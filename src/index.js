@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/stateless/App'
+import App from './components/stateless/App.tsx'
 import './styles/index.css'
 import 'bootstrap/dist/css/bootstrap.css'
 

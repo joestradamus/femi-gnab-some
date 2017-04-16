@@ -1,14 +1,12 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { HomePage } from './HomePage'
 import { Dashboard } from '../stateful/Dashboard'
 
-const App = () => {
-    return (
-        <div>
-            <HomePage />
-            <Dashboard />
-        </div>
-    )
-}
+const App = () => (
+    <div>
+        <HomePage />
+        <Dashboard />
+    </div>
+)
 
 export default App

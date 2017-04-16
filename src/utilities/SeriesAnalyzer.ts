@@ -9,7 +9,7 @@ export const SeriesAnalyzer = () => {
      * @param tweets - an array of tweets
      * @returns array of average sentiment
      */
-    createAverageHourlySeriesFor: (tweets) => {
+    const createAverageHourlySeriesFor: (tweets) => {
         const hours = new Map()
         const hoursWithFollowersWeightedSet = new Map()
         _.range(24).forEach(number => {

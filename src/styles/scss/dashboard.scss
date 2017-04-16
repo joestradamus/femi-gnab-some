@@ -28,7 +28,7 @@
     .daily-scatter-chart { @include create-default-chart-styling(); }
     .daily-breakdown-chart { @include create-default-chart-styling(); }
     .daily-sentiment-chart { @include create-default-chart-styling(); }
-    .word-count-bar-chart { @include create-default-chart-styling; }
+    .word-count-bar-chart { @include create-default-chart-styling(); }
   }
 }
 

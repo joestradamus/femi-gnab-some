@@ -13,10 +13,23 @@ const marquetteCampus = [ // bottom left -> top right coordinate system
     '43.037529',          // latitude @ 24th/Michigan.
     '-87.9210',           // longitude @ 8th/State St.
     '43.0427577'          // latitude @ 8th/State St.
-];
+]
 
 interface Tweet {
-    
+    id: number,
+    text: string
+    date: string,
+    user: {
+        id: number,
+        name: string,
+        location: string,
+        followerCount: number,
+        friendsCount: number,
+        favoritesCount: number,
+        statusesCount: number,
+        profileImage: string
+    },
+    coordinates: 
 }
 const extractDetailsFromRaw = (tweet) => {
     return {
