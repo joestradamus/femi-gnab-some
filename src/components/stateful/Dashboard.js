@@ -9,6 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import * as util from '../../utilities'
 import { ChartArea } from '../stateless/charts/ChartArea'
+import { GenderProfile } from '../stateless/GenderProfile'
 import { LoadingIcon } from '../stateless/LoadingIcon'
 import { DateSelectorModal } from './DateSelectorModal'
 
