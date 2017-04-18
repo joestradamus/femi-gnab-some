@@ -1,7 +1,15 @@
 @import "colors";
 
 .loading-icon {
-    width: 50px;
-    height: 50px;
-    margin: auto;
+    position: absolute;
+    width: 35vw;
+    height: 35vh;
+    margin-left: 27vw;
+    margin-top: 30vh;
+    @media screen and (max-width: 800px) {
+        width: 50vw;
+        height: 30vh;
+        margin-left: 20vw;
+        margin-top: 30vh;
+    }
 }

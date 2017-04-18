@@ -60,7 +60,7 @@ export const DailyBreakdownChart = (props) => {
                 text: 'Hour of Day'
             }
         },
-        colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', '#FCF4D9'],
+        colors: ['rgb(0, 188, 212)', 'rgb(255, 64, 129)', '#FCF4D9'],
         tooltip: {
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
             style: {

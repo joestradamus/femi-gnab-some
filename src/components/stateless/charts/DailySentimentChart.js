@@ -107,7 +107,7 @@ export const DailySentimentChart = (props) => {
             }
         },
         series: props.data,
-        colors: ['rgb(0, 170, 160)', 'rgb(142, 210, 201)', 'rgb(255, 122, 90)', 'rgb(255, 184, 95)'],
+        colors: ['rgb(0, 188, 212)', 'rgba(0, 170, 160, .4)', 'rgb(255, 64, 129)', 'rgba(255, 64, 129, .4)'],
         legend: {
             itemStyle: {
                 color: '#E0E0E3'

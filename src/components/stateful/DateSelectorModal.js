@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
-export class DateModalButton extends React.Component {
+export class DateSelectorModal extends React.Component {
 
     PropTypes = {
-        dateButtons: React.PropTypes.arrayOf(React.PropTypes.element)
+        modalItems: React.PropTypes.arrayOf(React.PropTypes.element)
     }
 
     constructor() {
@@ -16,13 +16,6 @@ export class DateModalButton extends React.Component {
 
     toggle = () => this.setState({ modal: !this.state.modal })
 
-    getButtons = () => (
-        <div>
-            { this.props.dateButtons.map(button => button) }
-        </div>
-    )
-
-
     render = () => (
         <div className="date-select-button">
             <Button
@@ -32,14 +25,14 @@ export class DateModalButton extends React.Component {
                 outline={ true }
                 size="lg"
             >
-                Begin
+                Select a date
             </Button>
             <Modal
                 isOpen={ this.state.modal }
                 toggle={ this.toggle }
             >
                 <ModalHeader className="date-modal-header" toggle={ this.toggle }/>
-                <ModalBody className="date-modal-body"> { this.getButtons() } </ModalBody>
+                <ModalBody className="date-modal-body"> { this.props.modalItems } </ModalBody>
                 <ModalFooter className="date-modal-footer">
                     <Button className="date-modal-button" color="danger" onClick={ this.toggle }> Close </Button>
                 </ModalFooter>

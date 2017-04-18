@@ -1,12 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Poiret+One|Righteous|Open+Sans+Condensed:300");
 .date-select-button {
-  padding-top: 45vh; }
+  padding-top: 40vh; }
 
 .modal-area {
   padding: 0 0 5vh 0;
   text-align: center; }
 
 .date-modal-button {
+  cursor: pointer;
   text-align: center;
   margin: auto;
   color: #fcf4d9;
@@ -17,14 +18,17 @@
   color: #fcf4d9;
   font-family: "Poiret One", cursive; }
 
+.date-picker {
+  text-align: center; }
+
 .date-modal-body {
-  background-color: rgba(42, 42, 43, 0.7);
+  background-color: rgba(42, 42, 43, 0.2);
   text-align: center;
   color: #fcf4d9;
   font-family: "Poiret One", cursive; }
 
 .date-modal-header {
-  background-color: rgba(42, 42, 43, 0.8); }
+  background-color: rgba(42, 42, 43, 0.5); }
 
 .date-modal-footer {
-  background-color: rgba(42, 42, 43, 0.8); }
+  background-color: rgba(42, 42, 43, 0.5); }

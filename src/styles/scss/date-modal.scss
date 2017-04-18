@@ -2,7 +2,7 @@
 @import "fonts";
 
 .date-select-button {
-  padding-top: 45vh;
+  padding-top: 40vh;
 }
 .modal-area {
   padding: 0 0 5vh 0;
@@ -10,6 +10,7 @@
 }
 
 .date-modal-button {
+  cursor: pointer;
   text-align: center;
   margin: auto;
   color: $lightCream;
@@ -22,17 +23,21 @@
   font-family: $headerFont;
 }
 
+.date-picker {
+  text-align: center;
+}
+
 .date-modal-body {
-  background-color: rgba($chartBackgroundColor, .7);
+  background-color: rgba($chartBackgroundColor, .2);
   text-align: center;
   color: $lightCream;
   font-family: $headerFont;
 }
 
 .date-modal-header {
-  background-color: rgba($chartBackgroundColor, .8);
+  background-color: rgba($chartBackgroundColor, .5);
 }
 
 .date-modal-footer {
-  background-color: rgba($chartBackgroundColor, .8);
+  background-color: rgba($chartBackgroundColor, .5);
 }

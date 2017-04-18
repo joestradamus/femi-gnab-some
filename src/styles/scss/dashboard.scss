@@ -13,22 +13,21 @@
 }
 
 .chart-area {
+  .dashboard-button {
+    width: 30vw;
+    @media screen and (max-width: 800px) {
+      width: 90vw;
+    }
+  }
   min-height: 100vh;
   max-width: 100vw;
   background-color: $chartBackgroundColor;
   padding: 5vh 5vw 5vh 5vw;
-  .chart-area-title {
-    padding-top: 40vh;
-    color: $darkOrange;
-    font-family: $headerFont;
-    font-size: $headerSize;
-    text-align: center;
-  }
   .charts {
     .daily-scatter-chart { @include create-default-chart-styling(); }
     .daily-breakdown-chart { @include create-default-chart-styling(); }
     .daily-sentiment-chart { @include create-default-chart-styling(); }
-    .word-count-bar-chart { @include create-default-chart-styling; }
+    .word-count-bar-chart { @include create-default-chart-styling(); }
   }
 }
 

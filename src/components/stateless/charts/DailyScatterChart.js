@@ -116,7 +116,7 @@ export const DailyScatterChart = (props) => {
             }
         },
         series: props.data,
-        colors: ['rgb(0, 170, 160)', 'rgb(255, 122, 90)', 'rgb(255, 184, 95)'],
+        colors: ['rgb(0, 188, 212)', 'rgb(255, 64, 129)'],
         tooltip: {
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
             style: {

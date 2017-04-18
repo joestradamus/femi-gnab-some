@@ -1,19 +1,18 @@
 import React from 'react'
-import { Button } from 'reactstrap'
 import * as _ from 'lodash'
 import moment from 'moment'
+import DatePicker from 'material-ui/DatePicker'
+import RaisedButton from 'material-ui/RaisedButton'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import * as util from '../../utilities'
-import { DailySentimentChart } from '../stateless/charts/DailySentimentChart'
-import { DailyScatterChart } from '../stateless/charts/DailyScatterChart'
-import { DailyBreakdownChart } from '../stateless/charts/DailyBreakdownChart'
-import { WordCountBarChart } from '../stateless/charts/WordCountBarChart'
-import { DateModalButton } from './DateModalButton'
-import loader from '../../../public/loader.svg'
+import { ChartArea } from '../stateless/charts/ChartArea'
+import { LoadingIcon } from '../stateless/LoadingIcon'
+import { DateSelectorModal } from './DateSelectorModal'
 
-async function getAllTweetsSince(day = moment().startOf('day')) {
-    const startDate = day.toDate()
-    const endDate = moment().endOf('day').toDate()
+async function getAllTweetsSince(startDate, endDate) {
     const url = `/api/tweets/${startDate}/${endDate}`
     try {
         return await fetch(url, { method: 'get'}).then(response => { return response })
@@ -34,9 +33,9 @@ async function calculateAllSeriesWithTweets(tweets) {
         ],
         dailySentimentSeries: [
             { name: 'Male', data: util.createAverageHourlySeriesFor(maleTweets).hourly },
-            { name: 'Male (Adjusted for follower count)', data: util.createAverageHourlySeriesFor(maleTweets).hourlyWeighted },
+            { name: 'Male (multiplied by follower count)', data: util.createAverageHourlySeriesFor(maleTweets).hourlyWeighted },
             { name: 'Female', data: util.createAverageHourlySeriesFor(femaleTweets).hourly },
-            { name: 'Female (Adjusted for follower count)', data: util.createAverageHourlySeriesFor(femaleTweets).hourlyWeighted }
+            { name: 'Female (multiplied by follower count)', data: util.createAverageHourlySeriesFor(femaleTweets).hourlyWeighted }
         ],
         dailyBreakdownSeries: [
             { name: 'Male', data: util.createHourlyTotalSeriesFor(maleTweets) },
@@ -62,106 +61,105 @@ export class Dashboard extends React.Component {
         return {
             loading: false,
             loaded: false,
-            data: {}
+            data: {},
+            minDate: undefined,
+            maxDate: undefined
         }
     }
 
     resetState = () => this.setState(this.getInitialState())
 
-    loadSinceDate = (date) => this.loadCharts(date)
+    loadDateRange = (startDate, endDate = moment().endOf('day').toDate()) => this.loadCharts(startDate, endDate)
 
-    loadCharts = (date) => {
+    loadCharts = (startDate, endDate) => {
         this.setState({ loading: true, loaded: false, data: {} })
-        getAllTweetsSince(date).then(response => response.json().then(tweets => 
+        getAllTweetsSince(startDate, endDate).then(response => response.json().then(tweets => 
             calculateAllSeriesWithTweets(tweets).then(series => this.load(series))))
     }
 
-    load = (data) => this.setState({ loading: false, loaded: true, data: data })
+    load = (data) => this.setState({ data: data, loading: false, loaded: true })
+
+    updateMaxDate = (event, date) => {
+        this.setState({ maxDate: moment(date).endOf('day').toDate() })
+        if (this.state.minDate !== undefined && this.state.minDate < this.state.maxDate)
+            this.loadDateRange(this.state.minDate, this.state.maxDate)
+    }
+
+    updateMinDate = (event, date) => {
+        this.setState({ minDate: moment(date).startOf('day').toDate() })
+        if (this.state.maxDate !== undefined && this.state.minDate < this.state.maxDate)
+            this.loadDateRange(this.state.minDate, this.state.maxDate)
+    }
 
     render() {
-        const createCharts = () => {
-            return(
+        const handleRender = () => {
+            const dateUnavailableInDb = (date) => {
+                return (date <= moment().subtract(1, 'month').toDate() || date > moment().toDate())
+            }
+            const datePickers = () => (
                 <div>
-                    <div className="modal-area">
-                        <Button
-                            className="date-modal-back-button"
-                            onClick={ this.resetState.bind(this) }
-                            color="info"
-                            outline={ true }
-                            size="lg"
-                        >
-                            Go back
-                        </Button>
-                    </div>
-                    <div className="charts">
-                        <DailyScatterChart data={ this.state.data.dailyScatterSeries } />
-                        <DailyBreakdownChart data={ this.state.data.dailyBreakdownSeries } />
-                        <DailySentimentChart data={ this.state.data.dailySentimentSeries } />
-                        <WordCountBarChart
-                            name="Male"
-                            data={ this.state.data.wordChartSeries[0] }
-                            color="rgb(0, 170, 160)"
-                            colorLight="rgb(142, 210, 201)"
-                        />
-                        <WordCountBarChart
-                            name="Female"
-                            data={ this.state.data.wordChartSeries[1] }
-                            color="rgb(255, 122, 90)"
-                            colorLight="rgb(255, 184, 95)"
-                        />
-                    </div>
+                    <DatePicker
+                        onChange={ this.updateMinDate } 
+                        floatingLabelText="Pick a start date" 
+                        shouldDisableDate={ dateUnavailableInDb } 
+                        className="date-picker" 
+                        autoOk={ true } 
+                    />
+                    <DatePicker 
+                        onChange={ this.updateMaxDate }
+                        floatingLabelText="Pick an end date" 
+                        shouldDisableDate={ dateUnavailableInDb } 
+                        className="date-picker"
+                        autoOk={ true }
+                    />
                 </div>
             )
-        }
-
-        const handleRender = () => {
-            if (this.state.loaded === true) {
+            if (this.state.loading === true) return <LoadingIcon />
+            else if (this.state.loaded === true) {
                 return(
-                   <div> { createCharts() } </div>
-                )
-            }
-            else if (this.state.loading === true) {
-                return(
-                    <div> 
-                        <img src={ loader } className="loading-icon" alt="loading icon" />
+                    <div>
+                        <MuiThemeProvider muiTheme={ getMuiTheme(baseTheme) }>
+                            <div>
+                                <RaisedButton 
+                                    className='dashboard-button'
+                                    onClick={ this.resetState.bind(this) } 
+                                    label="Choose another date range"
+                                />
+                                <RaisedButton 
+                                    className='dashboard-button'
+                                    primary={ true } 
+                                    onClick={ this.resetState.bind(this) } 
+                                    label="See Male Stats"
+                                />
+                                <RaisedButton 
+                                    className='dashboard-button'
+                                    secondary={ true } 
+                                    onClick={ this.resetState.bind(this) } 
+                                    label="See Female Stats"
+                                />
+                            </div>
+                        </MuiThemeProvider>
+                        <ChartArea 
+                            dailyScatterSeries={ this.state.data.dailyScatterSeries }
+                            dailyBreakdownSeries={ this.state.data.dailyBreakdownSeries }
+                            dailySentimentSeries={ this.state.data.dailySentimentSeries }
+                            wordSeriesMale={ this.state.data.wordChartSeries[0] }
+                            wordSeriesFemale={ this.state.data.wordChartSeries[1] }
+                        />
                     </div>
+                    
                 )
             }
             else {
                 return(
                     <div>
                         <div className="modal-area">
-                            <DateModalButton dateButtons={[
-                                <Button
-                                    key={ 0 }
-                                    className="date-modal-button"
-                                    onClick={ this.loadSinceDate.bind(this, moment().subtract(1, 'days')) }
-                                    color="info"
-                                    block={ true }
-                                    size="lg"
-                                >
-                                    Yesterday
-                                </Button>,
-                                <Button
-                                    key={ 1 }
-                                    className="date-modal-button"
-                                    onClick={ this.loadSinceDate.bind(this, moment().subtract(7, 'days')) }
-                                    color="info"
-                                    block={ true }
-                                    size="lg"
-                                >
-                                    Last 7 Days
-                                </Button>,
-                                <Button
-                                    key={ 2 }
-                                    className="date-modal-button"
-                                    onClick={ this.loadSinceDate.bind(this, moment().subtract(30, 'days')) }
-                                    color="info"
-                                    block={ true }
-                                    size="lg"
-                                >
-                                    Last 30 days
-                                </Button>
+                            <DateSelectorModal modalItems={[
+                                <div key={ 0 }>
+                                    <MuiThemeProvider muiTheme={ getMuiTheme(baseTheme) }>
+                                        { datePickers() }
+                                    </MuiThemeProvider>
+                                </div>
                             ]}/>
                         </div>
                     </div>
