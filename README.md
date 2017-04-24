@@ -1,6 +1,11 @@
 ![Heroku](http://heroku-badge.herokuapp.com/?app=femi-gnab-some&style=flat&root=index.html)
 ![Travis](https://travis-ci.org/joemcadams/femi-gnab-some.svg?branch=charting-features)
 
+<img src="misc/live-load-demo.gif" width="750"/>
+<img src="misc/profile-page-demo.gif" width="750"/>
+<img src="misc/word-bar-demo.gif" width="750"/>
+<img src="misc/sentiment-graph-demo.gif" width="750"/>
+
 Overview
 ======
 
