@@ -5,20 +5,14 @@
   height: 600px;
   position: relative;
   width: 90vw;
-  box-shadow: 0 0 5px 1px $lightCream;
+  box-shadow: 0 0 3px 0px $lightCream;
   margin-bottom: 5vh;
   :hover {
-    box-shadow: 0 0 5px 1px $darkOrange;
+    box-shadow: 0 0 3px 0px $darkOrange;
   }
 }
 
-.chart-area {
-  .dashboard-button {
-    width: 30vw;
-    @media screen and (max-width: 800px) {
-      width: 90vw;
-    }
-  }
+.dashboard-area {
   min-height: 100vh;
   max-width: 100vw;
   background-color: $chartBackgroundColor;

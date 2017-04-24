@@ -1,21 +1,26 @@
 @import "colors";
 @import "fonts";
 
-.date-select-button {
-  padding-top: 40vh;
-}
 .modal-area {
   padding: 0 0 5vh 0;
   text-align: center;
+  font-family: $bodyFont !important;
 }
 
 .date-modal-button {
+  position: absolute;
   cursor: pointer;
   text-align: center;
-  margin: auto;
-  color: $lightCream;
-  font-family: $headerFont;
+  font-family: $headerFont !important;
   display: block !important;
+  margin-top: 30vh;
+  @media screen and (max-width: 500px) {
+    margin-top:25vh;
+  } 
+  margin-left: 5vw;
+  margin-right: auto;
+  width: 80vw;
+  max-width: 90vw;
 }
 
 .date-modal-back-button {
@@ -24,11 +29,11 @@
 }
 
 .date-picker {
-  text-align: center;
+  text-align: left;
 }
 
 .date-modal-body {
-  background-color: rgba($chartBackgroundColor, .2);
+  background-color: rgba($chartBackgroundColor, .2) !important;
   text-align: center;
   color: $lightCream;
   font-family: $headerFont;

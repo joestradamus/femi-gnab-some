@@ -9,25 +9,18 @@ export const DailyScatterChart = (props) => {
             zoomType: 'xy',
             backgroundColor: '#2a2a2b',
             style: {
-                fontFamily: '\'Unica One\', sans-serif'
+                fontFamily: '\'Poiret One\', sans-serif'
             },
             plotBorderColor: '#606063'
         },
         title: {
-            text: 'Tweets in a Day',
+            text: 'Sentiment of Gendered Tweets Over Time',
             style: {
                 color: '#E0E0E3',
-                fontSize: '20px'
+                fontSize: '30px'
             }
         },
         xAxis: {
-            title: {
-                enabled: true,
-                text: 'Time',
-                style: {
-                    color: '#A0A0A3'
-                }
-            },
             startOnTick: true,
             endOnTick: true,
             showLastLabel: true,
@@ -42,10 +35,12 @@ export const DailyScatterChart = (props) => {
             tickColor: '#707073'
         },
         yAxis: {
+            opposite: false,
             title: {
                 text: 'Sentiment',
                 style: {
-                    color: '#A0A0A3'
+                    fontSize: '20px',
+                    color: '#E0E0E3'
                 }
             },
             gridLineColor: '#707073',

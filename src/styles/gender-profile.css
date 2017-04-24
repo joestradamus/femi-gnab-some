@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css?family=Poiret+One|Righteous|Open+Sans+Condensed:300");
+.profile-card {
+  background-color: rgba(70, 32, 102, 0.3);
+  box-shadow: 0 0 3px 0px black;
+  padding: 5vh 1vw 5vh 1vw;
+  margin-bottom: 5vh; }
+  .profile-card h1 {
+    padding: 2vh 0 2vh 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-family: "Righteous", cursive;
+    color: #ffb85f;
+    text-align: center; }
+  .profile-card h2 {
+    padding: 2vh 0 2vh 0;
+    margin: 5vh 0 5vh 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-family: "Open Sans Condensed", sans-serif;
+    color: #fcf4d9;
+    text-align: center; }
+  .profile-card .word-card {
+    text-align: center !important;
+    display: inline-block !important;
+    width: 11.425vw !important;
+    height: auto !important;
+    margin-left: 1vw;
+    margin-bottom: 1vh;
+    font-family: "Righteous", cursive !important; }
+    .profile-card .word-card :hover {
+      box-shadow: 0 0 5px 1px #fcf4d9; }
+    @media screen and (max-width: 700px) {
+      .profile-card .word-card {
+        width: 42.5vw !important;
+        margin-left: 1vw; } }
+    .profile-card .word-card .word-text {
+      display: block !important; }
+    .profile-card .word-card .word-count {
+      background-color: black !important; }
+    .profile-card .word-card .positive-word-card {
+      padding-top: 2vh !important;
+      padding-bottom: 2vh !important;
+      margin: 0 !important;
+      text-decoration: pointer !important;
+      background-color: #458B00 !important;
+      color: #7FFF00 !important; }
+      .profile-card .word-card .positive-word-card :hover {
+        box-shadow: none; }
+    .profile-card .word-card .negative-word-card {
+      padding-top: 2vh !important;
+      padding-bottom: 2vh !important;
+      margin: 0 !important;
+      background-color: #A02422 !important;
+      color: #FF4040 !important; }
+      .profile-card .word-card .negative-word-card :hover {
+        box-shadow: none; }

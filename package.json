@@ -23,6 +23,7 @@
     "react-dom": "^15.4.2",
     "react-highcharts": "^11.5.0",
     "react-icons": "^2.2.3",
+    "react-router": "^4.1.1",
     "react-scripts": "0.9.3",
     "react-tap-event-plugin": "^2.0.1",
     "reactstrap": "^4.4.0",
@@ -30,7 +31,6 @@
     "twit": "^2.2.5"
   },
   "scripts": {
-    "build-css": "node-sass src/styles/index.scss -o src/styles/",
     "bundle": "concurrently \"react-scripts start\" \"npm run watch-css\"",
     "watch-css": "node-sass src/styles/index.scss -o src/styles/ --watch",
     "start": "npm run start-server",

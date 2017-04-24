@@ -11,35 +11,36 @@ export const DailyBreakdownChart = (props) => {
             height: 600,
             backgroundColor: '#2a2a2b',
             style: {
-                fontFamily: '\'Unica One\', sans-serif'
+                fontFamily: '\'Poiret One\', sans-serif'            
             },
             plotBorderColor: '#606063'
         },
         title: {
-            text: 'Tweets by Gender',
+            text: 'Tweet Volume by Gender',
             style: {
                 color: '#E0E0E3',
-                fontSize: '20px'
+                fontSize: '30px'
             }
         },
         yAxis: {
-            min: 0,
-            title: {
-                text: 'Total Tweets',
-                style: {
-                    color: '#A0A0A3'
-                }
-            },
-            gridLineColor: '#707073',
-            labels: {
-                style: {
-                    color: '#E0E0E3'
-                }
-            },
-            lineColor: '#707073',
-            minorGridLineColor: '#505053',
-            tickColor: '#707073',
-            tickWidth: 1,
+                min: 0,
+                title: {
+                    text: 'Total Tweets',
+                    style: {
+                        color: '#E0E0E3',
+                        fontSize: '20px'
+                    }
+                },
+                gridLineColor: '#707073',
+                labels: {
+                    style: {
+                        color: '#E0E0E3'
+                    }
+                },
+                lineColor: '#707073',
+                minorGridLineColor: '#505053',
+                tickColor: '#707073',
+                tickWidth: 1,
         },
         xAxis: {
             categories: _.range(24).map(hour => moment().startOf('hour').hour(hour).format('h:mm a')),
@@ -51,21 +52,16 @@ export const DailyBreakdownChart = (props) => {
             },
             lineColor: '#707073',
             minorGridLineColor: '#505053',
-            tickColor: '#707073',
-            title: {
-                style: {
-                    color: '#A0A0A3'
-
-                },
-                text: 'Hour of Day'
-            }
+            tickColor: '#707073'
         },
-        colors: ['rgb(0, 188, 212)', 'rgb(255, 64, 129)', '#FCF4D9'],
+        colors: ['rgb(0, 188, 212)', 'rgb(255, 64, 129)'],
         tooltip: {
+            headerFormat: '<b>Total</b><br>',
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
             style: {
                 color: '#F0F0F0'
-            }
+            },
+            shared: true
         },
         legend: {
             itemStyle: {

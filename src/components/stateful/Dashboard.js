@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { Component } from 'react'
 import * as _ from 'lodash'
 import moment from 'moment'
 import DatePicker from 'material-ui/DatePicker'
-import RaisedButton from 'material-ui/RaisedButton'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import { Tabs, Tab } from 'material-ui/Tabs'
+import FaMars from 'react-icons/lib/fa/mars' // male
+import FaVenus from 'react-icons/lib/fa/venus' // female
+import FaCalendar from 'react-icons/lib/fa/calendar'
+import FaAreaChart from 'react-icons/lib/fa/area-chart'
 
 import * as util from '../../utilities'
 import { ChartArea } from '../stateless/charts/ChartArea'
 import { GenderProfile } from '../stateless/GenderProfile'
 import { LoadingIcon } from '../stateless/LoadingIcon'
 import { DateSelectorModal } from './DateSelectorModal'
+
+const VIEWS = {
+    SELECT_DATE: "SELECT_DATE",
+    LOADING: "LOADING",
+    OVERVIEW: "OVERVIEW",
+    MALE_STATS: "MALE_STATS",
+    FEMALE_STATS: "FEMALE_STATS",
+}
 
 async function getAllTweetsSince(startDate, endDate) {
     const url = `/api/tweets/${startDate}/${endDate}`
@@ -25,11 +34,12 @@ async function getAllTweetsSince(startDate, endDate) {
 // asynchronously load data, then return it formatted
 async function calculateAllSeriesWithTweets(tweets) {
     let filteredTweets = tweets.filter(tweet => tweet.user)
-    const maleTweets = filteredTweets.filter(tweet => tweet.user.guessedGender === "Male")
-    const femaleTweets = filteredTweets.filter(tweet => tweet.user.guessedGender === "Female")
+    let maleTweets = []
+    let femaleTweets = []
+    filteredTweets.forEach(tweet => tweet.user.guessedGender === "Male" ? maleTweets.push(tweet) : femaleTweets.push(tweet))
     const data = {
         dailyScatterSeries: [
-            { name: 'Male', data: util.createDailyScatterSeriesFor(maleTweets) },
+            { name: 'Male', data: util.createDailyScatterSeriesFor(maleTweets)},
             { name: 'Female', data: util.createDailyScatterSeriesFor(femaleTweets) }
         ],
         dailySentimentSeries: [
@@ -39,19 +49,23 @@ async function calculateAllSeriesWithTweets(tweets) {
             { name: 'Female (multiplied by follower count)', data: util.createAverageHourlySeriesFor(femaleTweets).hourlyWeighted }
         ],
         dailyBreakdownSeries: [
-            { name: 'Male', data: util.createHourlyTotalSeriesFor(maleTweets) },
-            { name: 'Female', data: util.createHourlyTotalSeriesFor(femaleTweets) }
+            { name: 'Male-authored tweets', data: util.createHourlyTotalSeriesFor(maleTweets) },
+            { name: 'Female-authored tweets', data: util.createHourlyTotalSeriesFor(femaleTweets) },
         ],
         wordChartSeries: [
             util.aggregateWordsUsedIn(maleTweets),
             util.aggregateWordsUsedIn(femaleTweets)
-        ]
+        ],
+        genderProfiles: {
+            male: util.analyzeSentimentOfGenderReferences(maleTweets),
+            female: util.analyzeSentimentOfGenderReferences(femaleTweets)
+        }
     }
     return await data
 }
 
 
-export class Dashboard extends React.Component {
+export class Dashboard extends Component {
 
     constructor() {
         super()
@@ -60,25 +74,36 @@ export class Dashboard extends React.Component {
 
     getInitialState = () => {
         return {
-            loading: false,
-            loaded: false,
+            view: VIEWS.SELECT_DATE,
             data: {},
             minDate: undefined,
             maxDate: undefined
         }
     }
 
-    resetState = () => this.setState(this.getInitialState())
-
     loadDateRange = (startDate, endDate = moment().endOf('day').toDate()) => this.loadCharts(startDate, endDate)
 
     loadCharts = (startDate, endDate) => {
-        this.setState({ loading: true, loaded: false, data: {} })
+        this.setState({ view: VIEWS.LOADING, data: {} })
         getAllTweetsSince(startDate, endDate).then(response => response.json().then(tweets => 
             calculateAllSeriesWithTweets(tweets).then(series => this.load(series))))
     }
 
-    load = (data) => this.setState({ data: data, loading: false, loaded: true })
+    load = (data) => this.setState({ data: data, view: VIEWS.OVERVIEW })
+
+    triggerOverview = () => this.setState({ view: VIEWS.OVERVIEW })
+
+    triggerMaleStatsView = () => this.setState({ 
+        view: VIEWS.MALE_STATS, 
+        data: this.state.data 
+    })
+
+    triggerFemaleStatsView = () => this.setState({ 
+        view: VIEWS.FEMALE_STATS,
+        data: this.state.data 
+    })
+
+    triggerCalendarView = () => this.setState({ view: VIEWS.SELECT_DATE, minDate: undefined, maxDate: undefined })
 
     updateMaxDate = (event, date) => {
         this.setState({ maxDate: moment(date).endOf('day').toDate() })
@@ -94,9 +119,8 @@ export class Dashboard extends React.Component {
 
     render() {
         const handleRender = () => {
-            const dateUnavailableInDb = (date) => {
-                return (date <= moment().subtract(1, 'month').toDate() || date > moment().toDate())
-            }
+            const dateUnavailableInDb = (date) => { return (date <= moment().subtract(1, 'month').toDate() || date > moment().toDate()) }
+            
             const datePickers = () => (
                 <div>
                     <DatePicker
@@ -115,61 +139,98 @@ export class Dashboard extends React.Component {
                     />
                 </div>
             )
-            if (this.state.loading === true) return <LoadingIcon />
-            else if (this.state.loaded === true) {
-                return(
-                    <div>
-                        <MuiThemeProvider muiTheme={ getMuiTheme(baseTheme) }>
-                            <div>
-                                <RaisedButton 
-                                    className='dashboard-button'
-                                    onClick={ this.resetState.bind(this) } 
-                                    label="Choose another date range"
-                                />
-                                <RaisedButton 
-                                    className='dashboard-button'
-                                    primary={ true } 
-                                    onClick={ this.resetState.bind(this) } 
-                                    label="See Male Stats"
-                                />
-                                <RaisedButton 
-                                    className='dashboard-button'
-                                    secondary={ true } 
-                                    onClick={ this.resetState.bind(this) } 
-                                    label="See Female Stats"
-                                />
-                            </div>
-                        </MuiThemeProvider>
-                        <ChartArea 
-                            dailyScatterSeries={ this.state.data.dailyScatterSeries }
-                            dailyBreakdownSeries={ this.state.data.dailyBreakdownSeries }
-                            dailySentimentSeries={ this.state.data.dailySentimentSeries }
-                            wordSeriesMale={ this.state.data.wordChartSeries[0] }
-                            wordSeriesFemale={ this.state.data.wordChartSeries[1] }
-                        />
-                    </div>
-                    
-                )
-            }
-            else {
-                return(
-                    <div>
+            switch (this.state.view) {
+                case VIEWS.SELECT_DATE:
+                    return (
                         <div className="modal-area">
                             <DateSelectorModal modalItems={[
                                 <div key={ 0 }>
-                                    <MuiThemeProvider muiTheme={ getMuiTheme(baseTheme) }>
-                                        { datePickers() }
-                                    </MuiThemeProvider>
+                                    { datePickers() }
                                 </div>
                             ]}/>
                         </div>
-                    </div>
-                )
+                    )
+                case VIEWS.LOADING:
+                    return <LoadingIcon />
+                case VIEWS.OVERVIEW:
+                    return (
+                        <div>
+                            <ChartArea 
+                                dailyScatterSeries={ this.state.data.dailyScatterSeries }
+                                dailyBreakdownSeries={ this.state.data.dailyBreakdownSeries }
+                                dailySentimentSeries={ this.state.data.dailySentimentSeries }
+                                wordSeriesMale={ this.state.data.wordChartSeries[0] }
+                                wordSeriesFemale={ this.state.data.wordChartSeries[1] }
+                            />
+                        </div>
+                    )
+                case VIEWS.MALE_STATS:
+                    return (
+                        <div>
+                            <GenderProfile 
+                                name="male"
+                                male={{
+                                    positive: this.state.data.genderProfiles.male.malePositive,
+                                    negative: this.state.data.genderProfiles.male.maleNegative,
+                                }}
+                                female={{
+                                    positive: this.state.data.genderProfiles.male.femalePositive,
+                                    negative: this.state.data.genderProfiles.male.femaleNegative,
+                                }}
+                            />
+                        </div>
+                    )
+                case VIEWS.FEMALE_STATS:
+                    return (
+                        <div>
+                            <GenderProfile 
+                                name="female"
+                                male={{
+                                    positive: this.state.data.genderProfiles.female.malePositive,
+                                    negative: this.state.data.genderProfiles.female.maleNegative,
+                                }}
+                                female={{
+                                    positive: this.state.data.genderProfiles.female.femalePositive,
+                                    negative: this.state.data.genderProfiles.female.femaleNegative,
+                                }}
+                            />
+                        </div>
+                    )
+                default:
+                    return <div/>
             }
         }
 
-        return(
-            <div className="chart-area">
+        return (
+            <div className="dashboard-area">
+                <Tabs 
+                    tabItemContainerStyle={{ 
+                        paddingTop: '2vh',
+                        paddingBottom: '2vh',
+                        backgroundColor: '#2a2a2b',
+                        boxShadow: '0 0 3px 0px black',
+                    }}
+                    inkBarStyle={{
+                        marginBottom: '5vh'
+                    }}
+                >
+                    <Tab
+                        icon={ <FaCalendar size={ 40 }/> }
+                        onClick={ this.triggerCalendarView.bind(this) }
+                    />
+                    <Tab
+                        icon={ <FaAreaChart size={ 40 }/> }
+                        onClick={ this.triggerOverview.bind(this) }
+                    />
+                    <Tab
+                        icon={ <FaMars size={ 40 }/> }
+                        onClick={ this.triggerMaleStatsView.bind(this) }
+                    />
+                    <Tab
+                        icon={ <FaVenus size={ 40 }/> }
+                        onClick={ this.triggerFemaleStatsView.bind(this) }
+                    />
+                </Tabs>
                 { handleRender() }
             </div>
         )

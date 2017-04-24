@@ -1,0 +1,63 @@
+@import "fonts";
+@import "colors";
+
+.profile-card {
+    background-color: rgba($darkPurple, .3);
+    box-shadow: 0 0 3px 0px black;
+    padding: 5vh 1vw 5vh 1vw;
+    margin-bottom: 5vh;
+    h1 {
+        padding: 2vh 0 2vh 0;
+        background-color: rgba(black, .3);
+        font-family: $titleFont;
+        color: $darkOrange;
+        text-align: center;
+    }
+    h2 {
+        padding: 2vh 0 2vh 0;
+        margin: 5vh 0 5vh 0;
+        background-color: rgba(black, .3);
+        font-family: $bodyFont;
+        color: $lightCream;
+        text-align: center;
+    }
+    .word-card {
+        text-align: center !important;
+        display: inline-block !important;
+        width: 11.425vw !important;
+        height: auto !important;
+        margin-left: 1vw;
+        margin-bottom: 1vh;
+        font-family: $titleFont !important;
+        :hover {
+            box-shadow: 0 0 5px 1px $lightCream;
+        }
+        @media screen and (max-width: 700px) {
+            width: 42.5vw !important;
+            margin-left: 1vw;
+        }
+        .word-text { display: block !important; }
+        .word-count { background-color: black !important; }
+        .positive-word-card {
+            padding-top: 2vh !important;
+            padding-bottom: 2vh !important;
+            margin: 0 !important;
+            text-decoration: pointer !important;
+            background-color: $positiveDark !important;
+            color: $positiveLight !important;
+            :hover {
+                box-shadow: none;
+            }
+        }
+        .negative-word-card {
+            padding-top: 2vh !important;
+            padding-bottom: 2vh !important;
+            margin: 0 !important;
+            background-color: $negativeDark !important;
+            color: $negativeLight !important;
+            :hover {
+                box-shadow: none;
+            }   
+        }
+    }
+}

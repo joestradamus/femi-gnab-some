@@ -1,42 +1,45 @@
-import React from 'react'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import React, { Component } from 'react'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 
-export class DateSelectorModal extends React.Component {
+export class DateSelectorModal extends Component {
 
-    PropTypes = {
-        modalItems: React.PropTypes.arrayOf(React.PropTypes.element)
-    }
-
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
-            modal: false
+            open: false
         }
     }
 
-    toggle = () => this.setState({ modal: !this.state.modal })
+    toggle = () => this.setState({ open: !this.state.open })
 
     render = () => (
-        <div className="date-select-button">
-            <Button
+        <div>
+            <RaisedButton
                 className="date-modal-button"
-                color="warning"
-                onClick={ this.toggle }
-                outline={ true }
-                size="lg"
+                backgroundColor="rgb(70, 32, 102)"
+                primary={ true }
+                onClick={ this.toggle.bind(this) }
+                keyboardFocused={ true } 
             >
-                Select a date
-            </Button>
-            <Modal
-                isOpen={ this.state.modal }
-                toggle={ this.toggle }
+                Select a timeframe
+            </RaisedButton>
+            <Dialog
+                title="Select a timeframe"
+                actions={[
+                    <FlatButton
+                        label="Cancel"
+                        primary={ true }
+                        onTouchTap={ this.toggle.bind(this) }
+                    />
+                ]}
+                modal={ true }
+                open={ this.state.open }
+                onRequestClose={ () => this.setState({ open: false })}
             >
-                <ModalHeader className="date-modal-header" toggle={ this.toggle }/>
-                <ModalBody className="date-modal-body"> { this.props.modalItems } </ModalBody>
-                <ModalFooter className="date-modal-footer">
-                    <Button className="date-modal-button" color="danger" onClick={ this.toggle }> Close </Button>
-                </ModalFooter>
-            </Modal>
+                { this.props.modalItems }
+            </Dialog>
         </div>
     )
 }

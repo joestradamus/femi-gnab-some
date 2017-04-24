@@ -9,22 +9,23 @@ export const DailySentimentChart = (props) => {
         chart: {
             height: 600,
             zoomType: 'xy',
-            type: 'area',
+            type: 'spline',
+            dashStyle: 'shortdot',
             backgroundColor: '#2a2a2b',
             style: {
-                fontFamily: '\'Unica One\', sans-serif'
+                fontFamily: '\'Poiret One\', sans-serif'
             },
             plotBorderColor: '#606063'
         },
         title: {
-            text: 'Average Sentiment in a Day',
+            text: 'Average Daily Sentiment',
             style: {
                 color: '#E0E0E3',
-                fontSize: '20px'
+                fontSize: '30px'
             }
         },
         subtitle: {
-            text: 'Average and Average(follower-adjusted) Series',
+            text: 'Average and Average (follower-adjusted) Series',
             style: {
                 color: '#E0E0E3'
             }
@@ -39,20 +40,14 @@ export const DailySentimentChart = (props) => {
             },
             lineColor: '#707073',
             minorGridLineColor: '#505053',
-            tickColor: '#707073',
-            title: {
-                style: {
-                    color: '#A0A0A3'
-
-                },
-                text: 'Hour of Day'
-            }
+            tickColor: '#707073'
         },
         yAxis: {
             title: {
                 text: 'Overall Sentiment',
                 style: {
-                    color: '#A0A0A3'
+                    color: '#E0E0E3',
+                    fontSize: '20px'
                 }
             },
             labels: {

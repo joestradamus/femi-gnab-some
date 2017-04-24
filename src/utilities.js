@@ -102,6 +102,73 @@ export const aggregateWordsUsedIn = (tweets) => {
         }
     })
     const sortedWords = _.sortBy(wordArray, ['y', 'word']) // sort in increasing order by count of word, then alphabetically
-    const top100WordsSorted = _.takeRight(sortedWords, 100)
+    const top100WordsSorted = _.takeRight(sortedWords, 50)
     return top100WordsSorted
+}
+
+export const analyzeSentimentOfGenderReferences = (tweets) => {
+    const malePositiveWords = new Map()
+    const malePositiveSentiment = { score: 0, count: 0 }
+    const maleNegativeWords = new Map()
+    const maleNegativeSentiment = { score: 0, count: 0 }
+    const femalePositiveWords = new Map()
+    const femalePositiveSentiment = { score: 0, count: 0 }
+    const femaleNegativeWords = new Map()
+    const femaleNegativeSentiment = { score: 0, count: 0 }
+
+    const createDescSeriesFromMap = (map) => {
+        return  _.sortBy(
+            _.toArray(map).map(entry => { return { text: entry[0], count: entry[1] } }),
+            ['count', 'word'] // sort by count, then alphabetically
+        ).reverse()
+    }
+
+    tweets.forEach(tweet => {
+        if (tweet.textTopics.length > 0 
+            && tweet.textSentiment) {
+                tweet.textTopics.forEach(topic => {
+                    if (topic.genderGuess) {
+                        if (topic.genderGuess === "Male") {
+                            tweet.textSentiment.positive.forEach(word => { // for every positive word encountered
+                                malePositiveSentiment.count++
+                                malePositiveSentiment.score += tweet.textSentiment.score
+                                malePositiveWords.has(word)  // if it's been seen before
+                                    ? malePositiveWords.set(word, malePositiveWords.get(word) + 1) // increment its count by one
+                                    : malePositiveWords.set(word, 1) // or set it to one if not already in map
+                            })
+                            tweet.textSentiment.negative.forEach(word => {
+                                maleNegativeSentiment.count++
+                                maleNegativeSentiment.score += tweet.textSentiment.score
+                                maleNegativeWords.has(word)
+                                    ? maleNegativeWords.set(word, maleNegativeWords.get(word) + 1) 
+                                    : maleNegativeWords.set(word, 1) 
+                            })
+                        } 
+                        else if (topic.genderGuess === "Female") {
+                            tweet.textSentiment.positive.forEach(word => { 
+                                femalePositiveSentiment.count++
+                                femalePositiveSentiment.score += tweet.textSentiment.score
+                                femalePositiveWords.has(word)  
+                                    ? femalePositiveWords.set(word, femalePositiveWords.get(word) + 1) 
+                                    : femalePositiveWords.set(word, 1) 
+                            })
+                            tweet.textSentiment.negative.forEach(word => {
+                                femaleNegativeSentiment.count++
+                                femaleNegativeSentiment.score += tweet.textSentiment.score
+                                femaleNegativeWords.has(word)
+                                    ? femaleNegativeWords.set(word, femaleNegativeWords.get(word) + 1) 
+                                    : femaleNegativeWords.set(word, 1) 
+                            })
+                        }
+                    }
+                })
+            }
+    })
+
+    return {
+        malePositive: createDescSeriesFromMap(malePositiveWords),
+        maleNegative: createDescSeriesFromMap(maleNegativeWords),
+        femalePositive: createDescSeriesFromMap(femalePositiveWords),
+        femaleNegative: createDescSeriesFromMap(femaleNegativeWords)
+    }
 }

@@ -9,7 +9,7 @@ export const WordCountBarChart = (props) => {
             zoomType: 'xy',
             backgroundColor: '#2a2a2b',
             style: {
-                fontFamily: '\'Unica One\', sans-serif'
+                fontFamily: '\'Poiret One\', sans-serif'
             },
             plotBorderColor: '#606063'
         },
@@ -17,7 +17,7 @@ export const WordCountBarChart = (props) => {
             text: `Words Used by ${props.name} Users`,
             style: {
                 color: '#E0E0E3',
-                fontSize: '20px'
+                fontSize: '30px'
             }
         },
         xAxis: {
@@ -30,19 +30,14 @@ export const WordCountBarChart = (props) => {
             },
             lineColor: '#707073',
             minorGridLineColor: '#505053',
-            tickColor: '#707073',
-            title: {
-                style: {
-                    color: '#A0A0A3'
-
-                }
-            }
+            tickColor: '#707073'
         },
         yAxis: {
             title: {
-                text: 'Total count',
+                text: 'Total Count',
                 style: {
-                    color: '#A0A0A3'
+                    color: '#E0E0E3',
+                    fontSize: '20px'
                 }
             },
             gridLineColor: '#707073',
@@ -93,8 +88,7 @@ export const WordCountBarChart = (props) => {
         },
 
         tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b>',
+            pointFormat: '<span style="color:{point.color}"><b>{point.name}</b></span>: <b>{point.y}</b>',
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
             style: {
                 color: '#F0F0F0'
@@ -103,7 +97,7 @@ export const WordCountBarChart = (props) => {
         colors: [props.color, props.colorLight],
         credits: {
             style: {
-                color: '#666'
+                color: '#2a2a2b'
             }
         },
         labels: {
@@ -190,7 +184,7 @@ export const WordCountBarChart = (props) => {
         maskColor: 'rgba(255,255,255,0.3)',
         series: [
             {
-                name: `The word`,
+                name: `Words`,
                 colorByPoint: true,
                 data: props.data
             }

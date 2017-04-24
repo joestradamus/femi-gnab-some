@@ -1,13 +1,29 @@
 import React from 'react'
-import Avatar from 'material-ui/Avatar'
-import Chip from 'material-ui/Chip'
 
+import { ProfileCard } from './ProfileCard'
+
+/**
+ *  series.positive/negative = [
+ *      {
+ *          count: number,
+ *          text: string
+ *      }] 
+ */
 export const GenderProfile = (props) => (
     <div>
-        <h1> { props.name } Users </h1>
-        <Chip>
-          <Avatar size={ 32 }> A </Avatar>
-          Text Avatar Chip
-        </Chip>
+        <ProfileCard 
+            text={ `words used by ${props.name} users when referencing male users` }
+            series={{
+                positive: props.male.positive,
+                negative: props.male.negative
+            }}
+        />
+        <ProfileCard 
+            text={ `words used by ${props.name} users when referencing female users` }
+            series={{
+                positive: props.female.positive,
+                negative: props.female.negative
+            }}
+        />
     </div>
 )

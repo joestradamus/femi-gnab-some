@@ -2,11 +2,11 @@
   position: absolute;
   width: 35vw;
   height: 35vh;
-  margin-left: 27vw;
-  margin-top: 30vh; }
+  margin-left: 27.5vw;
+  margin-top: 15vh; }
   @media screen and (max-width: 800px) {
     .loading-icon {
       width: 50vw;
       height: 30vh;
       margin-left: 20vw;
-      margin-top: 30vh; } }
+      margin-top: 15vh; } }
