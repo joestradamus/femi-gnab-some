@@ -1,0 +1,28 @@
+@import "colors";
+@import "fonts";
+
+@mixin create-default-chart-styling() {
+  position: relative;
+  width: 90vw;
+  box-shadow: 0 0 3px 0px $lightCream;
+  margin-bottom: 5vh;
+  :hover {
+    box-shadow: 0 0 3px 0px $darkOrange;
+  }
+}
+
+.default-chart-styling { @include create-default-chart-styling(); }
+
+.dashboard-area {
+  min-height: 100vh;
+  max-width: 100vw;
+  background-color: $chartBackgroundColor;
+  padding: 5vh 5vw 5vh 5vw;
+  .charts {
+    .daily-scatter-chart { @extend .default-chart-styling; }
+    .daily-breakdown-chart { @extend .default-chart-styling; }
+    .daily-sentiment-chart { @extend .default-chart-styling; }
+    .word-count-bar-chart { @extend .default-chart-styling; }
+  }
+}
+

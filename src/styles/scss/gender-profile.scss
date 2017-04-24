@@ -1,0 +1,81 @@
+@import "fonts";
+@import "colors";
+
+.gender-profile-title {
+    font-family: $headerFont;
+    padding-bottom: 5vh;
+    text-shadow: 0 0 20px black;
+    color: $lightCream;
+    text-align: center !important;
+    font-size: 5em;
+}
+
+.average-sentiment-gauge {
+    position: relative;
+    width: 90vw;
+    box-shadow: 0 0 3px 0px black;
+    margin-bottom: 5vh;
+}
+
+.profile-card {
+    background-color: rgba($chartBackgroundColor, .3);
+    box-shadow: 0 0 3px 0px black;
+    padding: 5vh 1vw 5vh 1vw;
+    margin-bottom: 5vh;
+    .gender-header {
+        padding: 2vh 2.5vw 2vh 2.5vw;
+        margin: 0 2.5vw 0 2.5vw;
+        background-color: rgba(black, .3);
+        font-family: $titleFont;
+        color: $darkOrange;
+        text-align: center;
+    }
+    .word-type-header {
+        padding: 2.5vh 2.5vw 2.5vh 2.5vw;
+        margin: 10px;
+        margin: 2vh 2.5vw 2vh 2.5vw;
+        background-color: rgba(black, .3);
+        font-family: $bodyFont;
+        color: $lightCream;
+        text-align: center;
+    }
+    .word-card {
+        text-align: center !important;
+        display: inline-block !important;
+        width: 11.75vw !important;
+        height: auto !important;
+        margin-left: 2.5vw;
+        margin-bottom: 1vh;
+        font-family: $titleFont !important;
+        :hover {
+            box-shadow: 0 0 5px 1px $lightCream;
+        }
+        @media screen and (max-width: 700px) {
+            width: 40vw !important;
+            margin-left: 2.5vw;
+        }
+        .word-text { display: block !important; }
+        .word-count { background-color: black !important; }
+        .positive-word-card {
+            padding-top: 2vh !important;
+            padding-bottom: 2vh !important;
+            margin: 0 !important;
+            text-decoration: pointer !important;
+            background-color: $positiveDark !important;
+            color: $positiveLight !important;
+            :hover {
+                box-shadow: none;
+            }
+        }
+        .negative-word-card {
+            padding-top: 2vh !important;
+            padding-bottom: 2vh !important;
+            margin: 0 !important;
+            background-color: $negativeDark !important;
+            color: $negativeLight !important;
+            :hover {
+                box-shadow: none;
+            }   
+        }
+    }
+}

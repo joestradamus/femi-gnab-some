@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Poiret+One|Righteous|Open+Sans+Condensed:300");
+.default-chart-styling, .dashboard-area .charts .daily-scatter-chart, .dashboard-area .charts .daily-breakdown-chart, .dashboard-area .charts .daily-sentiment-chart, .dashboard-area .charts .word-count-bar-chart {
+  position: relative;
+  width: 90vw;
+  box-shadow: 0 0 3px 0px #fcf4d9;
+  margin-bottom: 5vh; }
+  .default-chart-styling :hover, .dashboard-area .charts .daily-scatter-chart :hover, .dashboard-area .charts .daily-breakdown-chart :hover, .dashboard-area .charts .daily-sentiment-chart :hover, .dashboard-area .charts .word-count-bar-chart :hover {
+    box-shadow: 0 0 3px 0px #ffb85f; }
+
+.dashboard-area {
+  min-height: 100vh;
+  max-width: 100vw;
+  background-color: #2a2a2b;
+  padding: 5vh 5vw 5vh 5vw; }

@@ -18,11 +18,16 @@
 .home-button {
   @include create-button-styles-with($darkPurple, $darkOrange, $lightTeal, $darkPurple);
   margin-bottom: 4vh;
+
   .home-button-icon {
     padding-top: 3vh;
   }
 
   .home-button-text{
-    padding: 5px 5px 5px 5px;
+    padding: .5vh 5px 3vh 5px;
   }
+}
+
+.dashboard-button {
+  margin-bottom: 5vh;
 }
