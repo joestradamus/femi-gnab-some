@@ -3,24 +3,22 @@ import React from 'react'
 import { ProfileCard } from './ProfileCard'
 
 /**
- *  series.positive/negative = [
- *      {
- *          count: number,
- *          text: string
- *      }] 
+ *  Check for 
  */
 export const GenderProfile = (props) => (
     <div>
         <ProfileCard 
-            text={ `words used by ${props.name} users when referencing male users` }
-            series={{
+            text={ `${props.name} users referring to male subject: 
+                ${props.male.sentiment.value/props.male.sentiment.totalCount}`}
+            allSeries={{
                 positive: props.male.positive,
                 negative: props.male.negative
             }}
         />
         <ProfileCard 
-            text={ `words used by ${props.name} users when referencing female users` }
-            series={{
+            text={ `${props.name} users referring to female subject
+                ${props.female.sentiment.value/props.female.sentiment.totalCount}`}
+            allSeries={{
                 positive: props.female.positive,
                 negative: props.female.negative
             }}

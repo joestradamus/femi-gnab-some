@@ -170,10 +170,12 @@ export class Dashboard extends Component {
                             <GenderProfile 
                                 name="male"
                                 male={{
+                                    sentiment: this.state.data.genderProfiles.male.maleSentiment,
                                     positive: this.state.data.genderProfiles.male.malePositive,
                                     negative: this.state.data.genderProfiles.male.maleNegative,
                                 }}
                                 female={{
+                                    sentiment: this.state.data.genderProfiles.male.femaleSentiment,
                                     positive: this.state.data.genderProfiles.male.femalePositive,
                                     negative: this.state.data.genderProfiles.male.femaleNegative,
                                 }}
@@ -186,10 +188,12 @@ export class Dashboard extends Component {
                             <GenderProfile 
                                 name="female"
                                 male={{
+                                    sentiment: this.state.data.genderProfiles.female.maleSentiment,
                                     positive: this.state.data.genderProfiles.female.malePositive,
                                     negative: this.state.data.genderProfiles.female.maleNegative,
                                 }}
                                 female={{
+                                    sentiment: this.state.data.genderProfiles.female.femaleSentiment,
                                     positive: this.state.data.genderProfiles.female.femalePositive,
                                     negative: this.state.data.genderProfiles.female.femaleNegative,
                                 }}

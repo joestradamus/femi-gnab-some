@@ -9,7 +9,7 @@ export const ProfileCard = (props) => (
             <h2>
                 Positive Words Used (number = total count)
             </h2>
-            { props.series.positive.map(word => (
+            { props.allSeries.positive.map(word => (
                 <Paper className="word-card" zDepth={ 3 } key={ word.text }>
                     <div className="positive-word-card">
                         <Avatar size={ 32 } className="word-count"> { word.count } </Avatar>
@@ -22,7 +22,7 @@ export const ProfileCard = (props) => (
             <h2>
                 Negative Words Used (number = total count)
             </h2>
-            { props.series.negative.map(word => (
+            { props.allSeries.negative.map(word => (
                 <Paper className="word-card" zDepth={ 3 } key={ word.text }>
                     <div className="negative-word-card">
                         <Avatar size={ 32 } className="word-count"> { word.count } </Avatar>
