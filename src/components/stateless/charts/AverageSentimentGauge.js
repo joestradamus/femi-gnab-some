@@ -70,7 +70,7 @@ export const AverageSentimentGauge = (props) => {
         },
 
         tooltip: {
-            headerFormat: '<span style="color:{point.color}"><b>Referenced Gender</b></span>',
+            headerFormat: '',
             pointFormat: '<br/><span style="color:{point.color}">{point.name}</span>: <b>{point.y:,.1f}</b>',
             height: '50px',
             backgroundColor: 'rgba(0, 0, 0, 0.85)',

@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Poiret+One|Righteous|Open+Sans+Condensed:300");
+.gender-profile-title {
+  font-family: "Poiret One", cursive;
+  padding-bottom: 5vh;
+  text-shadow: 0 0 20px black;
+  color: #fcf4d9;
+  text-align: center !important;
+  font-size: 5em; }
+
 .average-sentiment-gauge {
   position: relative;
   width: 90vw;
@@ -6,7 +14,7 @@
   margin-bottom: 5vh; }
 
 .profile-card {
-  background-color: rgba(70, 32, 102, 0.3);
+  background-color: rgba(42, 42, 43, 0.3);
   box-shadow: 0 0 3px 0px black;
   padding: 5vh 1vw 5vh 1vw;
   margin-bottom: 5vh; }

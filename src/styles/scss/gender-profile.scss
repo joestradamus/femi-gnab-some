@@ -1,13 +1,24 @@
 @import "fonts";
 @import "colors";
+
+.gender-profile-title {
+    font-family: $headerFont;
+    padding-bottom: 5vh;
+    text-shadow: 0 0 20px black;
+    color: $lightCream;
+    text-align: center !important;
+    font-size: 5em;
+}
+
 .average-sentiment-gauge {
     position: relative;
     width: 90vw;
     box-shadow: 0 0 3px 0px black;
     margin-bottom: 5vh;
 }
+
 .profile-card {
-    background-color: rgba($darkPurple, .3);
+    background-color: rgba($chartBackgroundColor, .3);
     box-shadow: 0 0 3px 0px black;
     padding: 5vh 1vw 5vh 1vw;
     margin-bottom: 5vh;

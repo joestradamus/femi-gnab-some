@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css?family=Poiret+One|Righteous|Open+Sans+Condensed:300");
+.modal-area {
+  padding: 0 0 5vh 0;
+  text-align: center;
+  font-family: "Open Sans Condensed", sans-serif !important; }
+
+.date-modal-button {
+  background-color: #ffb85f !important;
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  font-family: "Poiret One", cursive !important;
+  display: block !important;
+  margin-top: 30vh;
+  margin-left: 5vw;
+  margin-right: auto;
+  width: 80vw;
+  max-width: 90vw; }
+  @media screen and (max-width: 500px) {
+    .date-modal-button {
+      margin-top: 25vh; } }
+
+.date-modal-back-button {
+  color: #fcf4d9;
+  font-family: "Poiret One", cursive; }
+
+.date-picker {
+  text-align: left; }
+
+.date-modal-body {
+  background-color: rgba(42, 42, 43, 0.2) !important;
+  text-align: center;
+  color: #fcf4d9;
+  font-family: "Poiret One", cursive; }
+
+.date-modal-header {
+  background-color: rgba(42, 42, 43, 0.5); }
+
+.date-modal-footer {
+  background-color: rgba(42, 42, 43, 0.5); }

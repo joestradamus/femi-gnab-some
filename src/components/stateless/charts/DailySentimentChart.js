@@ -10,7 +10,6 @@ export const DailySentimentChart = (props) => {
             height: 600,
             zoomType: 'xy',
             type: 'spline',
-            dashStyle: 'shortdot',
             backgroundColor: '#2a2a2b',
             style: {
                 fontFamily: '\'Poiret One\', sans-serif'
@@ -70,7 +69,7 @@ export const DailySentimentChart = (props) => {
             pointFormat: '{series.name}-authored tweets had an overall sentiment of <b>{point.y:,.1f}</b><br/>'
         },
         plotOptions: {
-            area: {
+            spline: {
                 pointStart: 0,
                 marker: {
                     enabled: false,
@@ -124,16 +123,6 @@ export const DailySentimentChart = (props) => {
                 color: '#707073'
             }
         },
-
-        drilldown: {
-            activeAxisLabelStyle: {
-                color: '#F0F0F3'
-            },
-            activeDataLabelStyle: {
-                color: '#F0F0F3'
-            }
-        },
-
         navigation: {
             buttonOptions: {
                 symbolStroke: '#DDDDDD',

@@ -5,6 +5,7 @@ import { AverageSentimentGauge } from '../stateless/charts/AverageSentimentGauge
 
 export const GenderProfile = (props) => (
     <div>
+        <h1 className="gender-profile-title">{ props.name } users </h1>
         <AverageSentimentGauge
             title={ props.name }
             maleAverage={ props.male.sentiment.value/props.male.sentiment.totalCount }

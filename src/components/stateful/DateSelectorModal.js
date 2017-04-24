@@ -18,10 +18,8 @@ export class DateSelectorModal extends Component {
         <div>
             <RaisedButton
                 className="date-modal-button"
-                backgroundColor="rgb(70, 32, 102)"
-                primary={ true }
+                secondary={ true }
                 onClick={ this.toggle.bind(this) }
-                keyboardFocused={ true } 
             >
                 Select a timeframe
             </RaisedButton>

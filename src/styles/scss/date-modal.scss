@@ -8,6 +8,7 @@
 }
 
 .date-modal-button {
+  background-color: $darkOrange !important;
   position: absolute;
   cursor: pointer;
   text-align: center;
@@ -15,7 +16,7 @@
   display: block !important;
   margin-top: 30vh;
   @media screen and (max-width: 500px) {
-    margin-top:25vh;
+    margin-top: 25vh;
   } 
   margin-left: 5vw;
   margin-right: auto;

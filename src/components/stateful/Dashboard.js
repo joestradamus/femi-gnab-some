@@ -24,7 +24,7 @@ const VIEWS = {
 }
 
 async function getAllTweetsSince(startDate, endDate) {
-    const url = `/api/tweets/${startDate}/${endDate}`
+    const url = `https://femi-gnab-some.herokuapp.com/api/tweets/${startDate}/${endDate}`
     try {
         return await fetch(url, { method: 'get'}).then(response => { return response })
     } catch (e) {
@@ -119,8 +119,9 @@ export class Dashboard extends Component {
     }
 
     render() {
+        const firstDateInDb = new Date("2017-03-26 0:00:00")
         const handleRender = () => {
-            const dateUnavailableInDb = (date) => { return (date <= moment().subtract(1, 'month').toDate() || date > moment().toDate()) }
+            const dateUnavailableInDb = (date) => { return (date <= firstDateInDb || date > moment().toDate()) }
             
             const datePickers = () => (
                 <div>
@@ -218,20 +219,33 @@ export class Dashboard extends Component {
                     inkBarStyle={{
                         marginBottom: '5vh'
                     }}
+                    value={ 
+                        this.state.view === VIEWS.SELECT_DATE ||  this.state.view === VIEWS.LOADING
+                            ? 0
+                            : this.state.view === VIEWS.OVERVIEW
+                                ? 1
+                                : this.state.view === VIEWS.MALE_STATS
+                                    ? 2
+                                    : 3
+                    }
                 >
                     <Tab
+                        value={ 0 }
                         icon={ <FaCalendar size={ 40 }/> }
                         onClick={ this.triggerCalendarView.bind(this) }
                     />
                     <Tab
+                        value={ 1 }
                         icon={ <FaAreaChart size={ 40 }/> }
                         onClick={ this.triggerOverview.bind(this) }
                     />
                     <Tab
+                        value={ 2 }
                         icon={ <FaMars size={ 40 }/> }
                         onClick={ this.triggerMaleStatsView.bind(this) }
                     />
                     <Tab
+                        value={ 3 }
                         icon={ <FaVenus size={ 40 }/> }
                         onClick={ this.triggerFemaleStatsView.bind(this) }
                     />
