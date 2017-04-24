@@ -1,27 +1,20 @@
-import * as React from 'react'
+import React from 'react'
 import ReactHighcharts from 'react-highcharts'
 
-export const WordCountBarChart = (props) => {
+export const AverageSentimentGauge = (props) => {
     const chartConfig = {
         chart: {
-            height: 600,
-            type: 'column',
+            type: 'bar',
             zoomType: 'xy',
             backgroundColor: '#2a2a2b',
             style: {
                 fontFamily: '\'Poiret One\', sans-serif'
             },
-            plotBorderColor: '#606063'
-        },
-        title: {
-            text: `Words Used by ${props.name} Users`,
-            style: {
-                color: '#E0E0E3',
-                fontSize: '30px'
-            }
+            plotBorderColor: '#606063',
+            height: 600
         },
         xAxis: {
-            type: 'category',
+            categories: [''],
             gridLineColor: '#707073',
             labels: {
                 style: {
@@ -32,25 +25,14 @@ export const WordCountBarChart = (props) => {
             minorGridLineColor: '#505053',
             tickColor: '#707073'
         },
+        title: {
+            text: ''
+        },
         yAxis: {
+            min: 0,
             title: {
-                text: 'Total Count',
-                style: {
-                    color: '#E0E0E3',
-                    fontSize: '20px'
-                }
-            },
-            gridLineColor: '#707073',
-            labels: {
-                style: {
-                    color: '#E0E0E3'
-                }
-            },
-            lineColor: '#707073',
-            minorGridLineColor: '#505053',
-            tickColor: '#707073',
-            tickWidth: 1,
-
+                text: 'Average Sentiment'
+            }
         },
         legend: {
             enabled: true,
@@ -70,7 +52,7 @@ export const WordCountBarChart = (props) => {
                 dataLabels: {
                     enabled: true,
                     color: '#B0B0B3',
-                    format: '{point.y}'
+                    format: '{point.y:,.1f}'
                 },
                 marker: {
                     lineColor: '#333'
@@ -88,15 +70,14 @@ export const WordCountBarChart = (props) => {
         },
 
         tooltip: {
-            headerFormat: '',
-            pointFormat: 'The word <span style="color:{point.color}">{point.name}</span> was used <b>{point.y}</b> times',
+            headerFormat: '<span style="color:{point.color}"><b>Referenced Gender</b></span>',
+            pointFormat: '<br/><span style="color:{point.color}">{point.name}</span>: <b>{point.y:,.1f}</b>',
+            height: '50px',
             backgroundColor: 'rgba(0, 0, 0, 0.85)',
             style: {
-                color: '#F0F0F0',
-                fontSize: '20px'
+                color: '#F0F0F0'
             }
         },
-        colors: [props.color, props.colorLight],
         credits: {
             style: {
                 color: '#2a2a2b'
@@ -108,50 +89,14 @@ export const WordCountBarChart = (props) => {
             }
         },
 
-        navigation: {
-            buttonOptions: {
-                symbolStroke: '#DDDDDD',
-                theme: {
-                    fill: '#505053'
-                }
-            }
-        },
-
-        // scroll charts
-        rangeSelector: {
-            buttonTheme: {
-                fill: '#505053',
-                stroke: '#000000',
-                style: {
-                    color: '#CCC'
-                },
-                states: {
-                    hover: {
-                        fill: '#707073',
-                        stroke: '#000000',
-                        style: {
-                            color: 'white'
-                        }
-                    },
-                    select: {
-                        fill: '#000003',
-                        stroke: '#000000',
-                        style: {
-                            color: 'white'
-                        }
-                    }
-                }
-            },
-            inputBoxBorderColor: '#505053',
-            inputStyle: {
-                backgroundColor: '#333',
-                color: 'silver'
-            },
-            labelStyle: {
-                color: 'silver'
-            }
-        },
-
+        series: [{
+            name: 'Average Sentiment When Mentioning Men',
+            data: [{ name: 'Average Sentiment When Mentioning Men', y: props.maleAverage, color: 'rgb(0, 188, 212)'}]
+        }, {
+            name: 'Average Sentiment When Mentioning Women',
+            data: [{ name: 'Average Sentiment When Mentioning Women', y: props.femaleAverage, color: 'rgb(255, 64, 129)' }]
+        }],
+        colors: ['rgb(0, 188, 212)', 'rgb(255, 64, 129)'],
         navigator: {
             handles: {
                 backgroundColor: '#666',
@@ -167,7 +112,6 @@ export const WordCountBarChart = (props) => {
                 gridLineColor: '#505053'
             }
         },
-
         scrollbar: {
             barBackgroundColor: '#808083',
             barBorderColor: '#808083',
@@ -184,16 +128,10 @@ export const WordCountBarChart = (props) => {
         textColor: '#C0C0C0',
         contrastTextColor: '#F0F0F3',
         maskColor: 'rgba(255,255,255,0.3)',
-        series: [
-            {
-                name: `Words`,
-                colorByPoint: true,
-                data: props.data
-            }
-        ]
     }
+
     return(
-        <div className="word-count-bar-chart">
+        <div className="average-sentiment-gauge">
             <ReactHighcharts config={ chartConfig } />
         </div>
     )

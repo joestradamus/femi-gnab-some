@@ -1,18 +1,26 @@
 @import url("https://fonts.googleapis.com/css?family=Poiret+One|Righteous|Open+Sans+Condensed:300");
+.average-sentiment-gauge {
+  position: relative;
+  width: 90vw;
+  box-shadow: 0 0 3px 0px black;
+  margin-bottom: 5vh; }
+
 .profile-card {
   background-color: rgba(70, 32, 102, 0.3);
   box-shadow: 0 0 3px 0px black;
   padding: 5vh 1vw 5vh 1vw;
   margin-bottom: 5vh; }
-  .profile-card h1 {
-    padding: 2vh 0 2vh 0;
+  .profile-card .gender-header {
+    padding: 2vh 2.5vw 2vh 2.5vw;
+    margin: 0 2.5vw 0 2.5vw;
     background-color: rgba(0, 0, 0, 0.3);
     font-family: "Righteous", cursive;
     color: #ffb85f;
     text-align: center; }
-  .profile-card h2 {
-    padding: 2vh 0 2vh 0;
-    margin: 5vh 0 5vh 0;
+  .profile-card .word-type-header {
+    padding: 2.5vh 2.5vw 2.5vh 2.5vw;
+    margin: 10px;
+    margin: 2vh 2.5vw 2vh 2.5vw;
     background-color: rgba(0, 0, 0, 0.3);
     font-family: "Open Sans Condensed", sans-serif;
     color: #fcf4d9;
@@ -20,17 +28,17 @@
   .profile-card .word-card {
     text-align: center !important;
     display: inline-block !important;
-    width: 11.425vw !important;
+    width: 11.75vw !important;
     height: auto !important;
-    margin-left: 1vw;
+    margin-left: 2.5vw;
     margin-bottom: 1vh;
     font-family: "Righteous", cursive !important; }
     .profile-card .word-card :hover {
       box-shadow: 0 0 5px 1px #fcf4d9; }
     @media screen and (max-width: 700px) {
       .profile-card .word-card {
-        width: 42.5vw !important;
-        margin-left: 1vw; } }
+        width: 40vw !important;
+        margin-left: 2.5vw; } }
     .profile-card .word-card .word-text {
       display: block !important; }
     .profile-card .word-card .word-count {
